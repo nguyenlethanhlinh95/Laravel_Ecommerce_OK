@@ -67,9 +67,6 @@ class ProductsController extends Controller
                 $imageName=$image->getClientOriginalName();
 
                 $Hinh = $datetime. "_" . $imageName;
-//                while(file_exists('images' . $Hinh)){
-//                    $Hinh = $datetime. "_" . $imageName;
-//                }
 
                 $image->move('images',$Hinh);
                 $formInput['image']=$Hinh;

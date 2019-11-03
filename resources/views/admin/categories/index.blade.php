@@ -1,7 +1,7 @@
 @extends('layout.admin.master')
 
 @section('header')
-    Product
+    Categories
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    List product
+                    List category
                 </div>
 
                 <div class="panel-body">
@@ -18,44 +18,34 @@
                             <thead>
                                 <tr>
                                     <th width="70px">STT</th>
-                                    <th>Mã SP</th>
-                                    <th>Tên sp</th>
-                                    <th width="100px">Hình ảnh</th>
-                                    <th>Mã code</th>
-                                    <th>Giá</th>
-                                    <th>Giá giảm</th>
+                                    <th>Mã danh mục</th>
+                                    <th>Tên Danh mục</th>
+                                    <th width="100px">Slug</th>
+                                    <th width="100px">Mô tả</th>
+                                    <th>Danh Mục cha</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach($products as $pro)
+                                @foreach($categories as $cat)
                                     <tr @if ($i %2 == 1) {{ 'class="odd gradeX"'  }} @else {{ 'class="even gradeC"' }} @endif>
                                         <th>{{ $i }}</th>
-                                        <td>{{ $pro->id }}</td>
-                                        <td>{{ $pro->pro_name }}</td>
-                                        <td>
-                                            @if ($pro->image == null)
-                                                <img style="width: 100px; height: 70px; object-fit: cover" src="images/image_null.jpg" alt="{{ $pro->pro_name }}">
-                                            @else
-                                                <img style="width: 100px; height: 70px; object-fit: cover" src="images/{{ $pro->image }}" alt="{{ $pro->pro_name }}">
-
-                                            @endif
-
-                                        </td>
-                                        <td class="center">{{ $pro->pro_code }}</td>
-                                        <td class="center">{{ $pro->pro_price }}</td>
-                                        <td class="center">{{ $pro->spl_price }}</td>
+                                        <td>{{ $cat->id }}</td>
+                                        <td>{{ $cat->name }}</td>
+                                        <td class="center">{{ $cat->slug }}</td>
+                                        <td class="center">{{ $cat->description	 }}</td>
+                                        <td class="center">{{ $cat->parent_id }}</td>
                                         <td class="center">
-                                            <a href="{{ route('product.create') }}" title="Create">
+                                            <a href="{{ route('category.create') }}" title="Create">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                             </a> |
-                                            <a href="{{ route('product.edit', ['id'=>$pro->id]) }}" title="Edit">
+                                            <a href="{{ route('category.edit', ['id'=>$cat->id]) }}" title="Edit">
                                                 <i class="fa fa-pencil" aria-hidden="true">
 
                                                 </i>
                                             </a> |
-                                            <a href="{{ route('product.show', ['id'=>$pro->id]) }}" title="Delete">
+                                            <a href="{{ route('category.show', ['id'=>$cat->id]) }}" title="Delete">
                                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                                             </a>
                                         </td>
@@ -69,7 +59,7 @@
                         </table>
 
                         <div class="pagination text-center" style="margin: 0 auto; display: block;">
-                            {{ $products->links() }}
+                            {{ $categories->links() }}
                         </div>
 
                     </div>
