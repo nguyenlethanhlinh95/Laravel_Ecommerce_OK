@@ -1,0 +1,44 @@
+.pdt-40 {
+  padding-top: 40px; }
+
+.mgt-20 {
+  margin-top: 20px; }
+
+.bold {
+  font-weight: bold; }
+
+.list_item_cart .table td.image {
+  width: 150px; }
+  .list_item_cart .table td.image img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    cursor: pointer; }
+.list_item_cart .table .pro_title {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 22px;
+  text-transform: capitalize;
+  font-weight: bold;
+  padding-top: 40px; }
+.list_item_cart .table td p {
+  font-weight: bold; }
+
+.wapper_total {
+  border: 1px solid #f3f3f3;
+  border-radius: 5px;
+  padding: 20px;
+  width: 100%; }
+  .wapper_total .label {
+    display: block;
+    text-align: left; }
+  .wapper_total .price {
+    display: block;
+    text-align: right; }
+  .wapper_total span {
+    font-size: 22px;
+    font-family: 'Times New Roman', Times, serif; }
+
+.button_wapper button {
+  width: 100%; }
+
+/*# sourceMappingURL=mystyle.css.map */
