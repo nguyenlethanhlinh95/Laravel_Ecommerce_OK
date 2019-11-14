@@ -41,8 +41,8 @@
 
                                 <div class="form-group">
                                     <label>Category Parent</label>
-                                    <select name="categories" class="form-control">
-                                        <option >Chọn</option>
+                                    <select name="parent_id" class="form-control">
+                                        <option value="0" >Chọn</option>
                                         @foreach($categories as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach

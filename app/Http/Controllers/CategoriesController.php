@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 use Illuminate\Support\Str;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CategoryRequest;
 
 
 
@@ -29,7 +31,8 @@ class CategoriesController extends Controller
     {
         //
         $listAll = $this->category->getAllWithPagi();
-        return view('admin.categories.index', ['categories'=>$listAll]);
+        $categories = $this->category->getAll();
+        return view('admin.categories.index', ['categories'=>$listAll, 'categories2' => $categories]);
     }
 
     /**
@@ -41,6 +44,7 @@ class CategoriesController extends Controller
     {
         //
         $categories = $this->category->getAll();
+
         return view('admin.categories.create', ['categories'=>$categories]);
     }
 
@@ -50,62 +54,29 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         //
-        $this->validate($request, [
-            'name' => 'required',
-            'description' => 'required',
-            'categories' => 'required',
-
-        ]);
-        $formInput = $request->all();
-        //dd($formInput["categories"]);
-
-        $category_id = $formInput["categories"];
-
-        if ($category_id == 0)
-        {
-        }
-        else
-        {
-            $category = new Category();
-            $category->name = $formInput["name"];
-            $category->description = $formInput["description"];
+        try{
+            $formInput = $request->all();
 
             if($formInput["slug"] == "")
             {
                 $slug = Str::slug($formInput["name"], '-');
-                $category->slug = $slug;
-            }
-            else
-            {
-                $category->slug = $formInput["slug"];
+                $formInput["slug"] = $slug;
             }
 
-            $status = $this->category->insert($category);
-            if ($status)
-            {
-                Session::flash('suc', 'You succesfully created a category.');
-                return redirect()->route("category.index");
-            }
-            else
-            {
-                Session::flash('err', 'You not insert a category.');
-                return redirect()->back();
-            }
-        $status = $this->category->insert($formInput);
-        if ($status)
-        {
-            Session::flash('suc', 'You succesfully created a product.');
+            Category::create($formInput);
+
+            Session::flash('suc', 'You succesfully created a category.');
             return redirect()->back();
         }
-        else
+        catch (Exception $ex)
         {
-            Session::flash('err', 'You not insert a category.');
+            Session::flash('err', 'Errors !');
             return redirect()->back();
         }
-        }
+
 
     }
 
@@ -131,6 +102,9 @@ class CategoriesController extends Controller
     public function edit($id)
     {
         //
+        $category = $this->category->getDetail($id);
+        $categories = $this->category->getAll();
+        return view('admin.categories.detail', ['category'=>$category, 'categories'=>$categories]);
     }
 
     /**
@@ -140,9 +114,24 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        try{
+            $cate = $this->category->getDetail($id);
+
+            $input = $request->all();
+            $cate->fill($input)->save();
+
+            Session::flash('inf', 'You succesfully updated a category.');
+            return redirect()->back();
+        }
+        catch (Exception $ex)
+        {
+            Session::flash('err', 'You not updated a category.');
+            return redirect()->back();
+        }
+
+
     }
 
     /**

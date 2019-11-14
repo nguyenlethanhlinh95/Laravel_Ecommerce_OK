@@ -35,7 +35,14 @@
                                         <td>{{ $cat->name }}</td>
                                         <td class="center">{{ $cat->slug }}</td>
                                         <td class="center">{{ $cat->description	 }}</td>
-                                        <td class="center">{{ $cat->parent_id }}</td>
+                                        <td class="center">
+                                            @foreach($categories2 as $item)
+                                                @if($cat->parent_id == $item->id)
+                                                    {{ $item-> name}}
+                                                @endif
+                                            @endforeach
+                                            {{--{{ $cat->parent_id }}--}}
+                                        </td>
                                         <td class="center">
                                             <a href="{{ route('category.create') }}" title="Create">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
