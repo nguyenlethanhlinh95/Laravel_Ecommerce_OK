@@ -313,3 +313,9 @@ table.dataTable thead .sorting:after {
 .show-grid {
     margin: 15px 0;
 }
+
+.flex-center{
+    display:  flex;
+    align-items: center;
+    justify-content: center;
+}

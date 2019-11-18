@@ -78,6 +78,7 @@ class CategoriesController extends Controller
         }
 
 
+
     }
 
     /**
@@ -169,9 +170,9 @@ class CategoryDao extends Category
 {
     public function getAllWithPagi()
     {
-        return Category::paginate(5);
+        $page=\Config::get('app.page');
+        return Category::paginate($page);
     }
-
     public function getAll()
     {
         try{
@@ -183,7 +184,19 @@ class CategoryDao extends Category
         }
 
     }
+    public function getAllSmall()
+    {
+        try{
+            $data = DB::table('categories')
+                ->pluck('id', 'name');
+            return $data;
+        }
+        catch (Exception $ex)
+        {
+            return null;
+        }
 
+    }
     public function getDetail($id)
     {
         return Category::find($id);
@@ -226,5 +239,6 @@ class CategoryDao extends Category
         }
 
     }
+
 
 }

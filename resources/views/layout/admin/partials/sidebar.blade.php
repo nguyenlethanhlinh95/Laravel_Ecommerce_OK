@@ -14,6 +14,18 @@
         <a href="{{ route('admin.index') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
     </li>
     <li>
+        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Category Product<span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            <li>
+                <a href="{{ route('category-product.index') }}">List</a>
+            </li>
+            <li>
+                <a href="{{ route('category-product.create') }}">Create</a>
+            </li>
+        </ul>
+        <!-- /.nav-second-level -->
+    </li>
+    <li>
         <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Product<span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
             <li>
@@ -37,6 +49,19 @@
         </ul>
         <!-- /.nav-second-level -->
     </li>
+    <li>
+        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Posts<span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            <li>
+                <a href="{{ route('post.index') }}">List</a>
+            </li>
+            <li>
+                <a href="{{ route('post.create') }}">Create</a>
+            </li>
+        </ul>
+        <!-- /.nav-second-level -->
+    </li>
+
     <li>
         <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
     </li>

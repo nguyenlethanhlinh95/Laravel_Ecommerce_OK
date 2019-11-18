@@ -19,6 +19,8 @@
     <!-- SB Admin CSS - Include with every page -->
     <link href="assets/admin/css/sb-admin.css" rel="stylesheet">
 
+
+
     <link rel="stylesheet" href="css/toastr.min.css">
     @yield('css')
 </head>

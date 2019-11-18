@@ -233,4 +233,12 @@ return [
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
     ],
 
+    /**
+     * Phan trang
+     * params:
+     * returns: int
+     */
+        'page' => 5,
+
+
 ];
