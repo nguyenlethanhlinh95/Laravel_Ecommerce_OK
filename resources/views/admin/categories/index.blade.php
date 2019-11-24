@@ -18,12 +18,12 @@
                             <thead>
                                 <tr>
                                     <th width="70px">STT</th>
-                                    <th>Mã danh mục</th>
-                                    <th>Tên Danh mục</th>
-                                    <th width="100px">Slug</th>
-                                    <th width="100px">Mô tả</th>
-                                    <th>Danh Mục cha</th>
-                                    <th>Action</th>
+                                    <th width="100px">Mã danh mục</th>
+                                    <th width="300px">Tên Danh mục</th>
+                                    <th width="250px">Slug</th>
+                                    <th width="350px">Mô tả</th>
+                                    <th width="100px">Danh Mục cha</th>
+                                    <th width="100px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
