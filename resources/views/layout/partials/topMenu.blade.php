@@ -8,6 +8,6 @@
     @endif
 
     <li><a href="#">Delivery</a></li>
-    <li><a href="#">Checkout</a></li>
+    <li><a href="{{ route('checkout') }}">Checkout</a></li>
     <li><a href="#">My Account</a></li>
 </ul>

@@ -14,10 +14,12 @@ class HomeController extends Controller
      * @return void
      */
     private $proDao = null;
+    private $proCateDao = null;
 
     public function __construct()
     {
         $this->proDao = new ProductDao();
+        $this->proCateDao = new CategoryProductDao();
     }
 
     /**
@@ -30,7 +32,8 @@ class HomeController extends Controller
         try
         {
             $newProduct = $this->proDao->getNewProduct();
-            return view('front.shop', ['newProduct' => $newProduct]);
+            $categorysProduct = $this->proCateDao->getAll();
+            return view('front.shop', compact('newProduct', 'categorysProduct'));
         }
         catch (\Exception $e)
         {

@@ -13,7 +13,16 @@ class Product extends Model
     //
     protected $table = 'products';
     protected $primaryKey = 'id';
-    protected $fillable = ['pro_name', 'pro_code', 'pro_price', 'spl_price', 'image', 'description', 'content'];
+    protected $fillable = ['pro_name', 'pro_code','id_category', 'pro_price', 'spl_price', 'image', 'description', 'content'];
 
+    public function categories()
+    {
+        return $this->belongsToMany('App\CategoryProduct', 'category_products', 'id_category', 'id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\CategoryProduct', 'id_category', 'id');
+    }
 }
 

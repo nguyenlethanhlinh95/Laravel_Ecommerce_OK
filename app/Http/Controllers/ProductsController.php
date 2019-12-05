@@ -20,15 +20,18 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public  $product;
+    public $categories;
     public function __construct()
     {
         $this->product = new ProductDao();
+        $this->categories = new CategoryDao();
     }
 
     public function index()
     {
-        $listAll = $this->product->getAll();
-        return view('admin.products.index', ['products'=>$listAll]);
+        $products = $this->product->getAll();
+        $categories_product = $this->categories->getAll();
+        return view('admin.products.index', compact('products', 'categories_product'));
     }
 
     /**

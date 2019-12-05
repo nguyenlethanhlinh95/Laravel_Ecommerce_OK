@@ -1,11 +1,38 @@
 .pdt-40 {
   padding-top: 40px; }
 
+.mgt-40 {
+  margin-top: 40px; }
+
+.mgbt-40 {
+  margin-bottom: 40px; }
+
 .mgt-20 {
   margin-top: 20px; }
 
+.mgbt-20 {
+  margin-bottom: 20px; }
+
+.mgt-10 {
+  margin-top: 10px; }
+
+.mgbt-10 {
+  margin-bottom: 10px; }
+
+.mgt-5 {
+  margin-top: 5px; }
+
+.mgbt-5 {
+  margin-bottom: 5px; }
+
 .bold {
   font-weight: bold; }
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-family: Arial; }
 
 .list_item_cart .table td.image {
   width: 150px; }
@@ -38,7 +65,17 @@
     font-size: 22px;
     font-family: 'Times New Roman', Times, serif; }
 
-.button_wapper button {
+.button_wapper a {
   width: 100%; }
+
+.sidebar_checkout h4 {
+  font-size: 22px;
+  margin-bottom: 10px; }
+.sidebar_checkout .font {
+  font-size: 18px; }
+.sidebar_checkout .bold {
+  font-size: 18px; }
+.sidebar_checkout .total {
+  color: #0056b3; }
 
 /*# sourceMappingURL=mystyle.css.map */

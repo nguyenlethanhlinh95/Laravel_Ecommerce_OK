@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryProductRequest extends FormRequest
+class infomationCheckoutRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,13 @@ class CategoryProductRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required',
-            'description' => 'required',
-            'parent_id' => ""
+            'fullName' => 'required|min:5|max:35',
+            'address' => 'required|min:5|max:200',
+            'email' => 'required|email|min:5|max:200',
+            'userName' => 'required|min:5|max:35',
+            //'email' => 'required|email|unique:users',
+            'password' => 'required|min:5|max:35|same:rePassword',
+            'rePassword' => 'required|min:5|max:35',
         ];
     }
 }

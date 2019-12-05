@@ -17,7 +17,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Create category
+                    Create category Product
                 </div>
 
                 <div class="panel-body">
@@ -26,22 +26,22 @@
                             {!! Form::open(['route'=> 'category-product.store', 'method' => 'post']) !!}
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" required minlength="5" name="name" placeholder="Category name">
+                                    <input class="form-control" value = "{{ old('name') }}" required name="name" placeholder="Category name">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Slug</label>
-                                    <input class="form-control" name="slug" placeholder="Slug"  >
+                                    <input class="form-control" value = "{{ old('slug') }}" name="slug" placeholder="Slug"  >
                                 </div>
 
                                 <div class="form-group">
                                     <label>Descriptions</label>
-                                    <input class="form-control" name="description" placeholder="Descriptions">
+                                    <input class="form-control" value =  "{{ old('description') }}" name="description" placeholder="Descriptions">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Category Parent</label>
-                                    <select name="parent_id" class="form-control">
+                                    <select value ="{{ old('parent_id') }}" name="parent_id" class="form-control">
                                         <option value="0" >Chọn</option>
                                         @foreach($getCateries as $key => $value)
                                             <option value="{{ $value }}">{{ $key }}</option>

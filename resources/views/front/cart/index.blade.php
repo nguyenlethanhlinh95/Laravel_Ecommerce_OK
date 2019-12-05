@@ -101,7 +101,8 @@
 
 
                 <div class="button_wapper mgt-20">
-                    <button class="btn btn-warning">Checkout</button>
+                    {{--<button class="btn btn-warning">Checkout</button>--}}
+                    <a class="btn btn-warning" href="{{ route('checkout')  }}">Checkout</a>
                 </div>
             </div>
             <!-- end sidebarcar -->
