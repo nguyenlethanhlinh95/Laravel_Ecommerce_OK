@@ -36,8 +36,10 @@ Route::post('/cart/updateItem', 'CartController@update')->name('updateItemCart')
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/checkout', 'CheckoutController@index')->name('checkout');
     Route::post('/formvalidate', 'CheckoutController@addressValidate')->name('checkout.addressValidate');
-//    Route::get('/orders', 'ProfileController@orders');
-//    Route::get('/address', 'ProfileController@address');
+    Route::get('/profile', 'ProfileController@index')->name('profile.index');
+    Route::get('/orders', 'ProfileController@orders')->name('profile.orders');
+    Route::get('/address', 'ProfileController@address')->name('profile.address');
+    Route::get('/thankyou', 'ProfileController@thankyou')->name('profile.thankyou');
 //    Route::post('/updateAddress', 'ProfileController@UpdateAddress');
 //    Route::get('/password', 'ProfileController@Password');
 //    Route::post('/updatePassword', 'ProfileController@updatePassword');

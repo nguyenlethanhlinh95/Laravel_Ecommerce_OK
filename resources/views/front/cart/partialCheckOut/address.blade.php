@@ -69,6 +69,11 @@
         <span style="color:red">{{ $errors->first('rePassword') }}</span>
     </div>
 
+    <div class="form-group">
+        <span><input type="radio" name="pay" value="COD" checked="checked" />COD </span>
+        <span><input type="radio" name="pay" value="paypal" />Paypal </span>
+    </div>
+
     <button type="submit" class="btn btn-primary">Continue</button>
 
     <div class="form-group">

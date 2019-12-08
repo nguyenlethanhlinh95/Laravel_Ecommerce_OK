@@ -33,7 +33,6 @@ class CheckoutController extends Controller
             $getAllCartItems = $this->cartDao->gettAllItemCart();
             $cartDao = $this->cartDao;
             return view('front.cart.checkOut', compact('getAllCartItems', 'cartDao'));
-            //echo "Checkout";
         }
         else
         {
@@ -52,7 +51,7 @@ class CheckoutController extends Controller
         // create order
         Order::createOder();
         Cart::destroy();
-        //Session::flash('suc', 'You succesfully created a post.');
-        return redirect()->back();
+        Session::flash('suc', 'You succesfully created a post.');
+        return redirect()->route('profile.thankyou');
     }
 }

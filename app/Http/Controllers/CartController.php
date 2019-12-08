@@ -195,4 +195,15 @@ class CartDao
 
         }
     }
+
+    public function getCartCount()
+    {
+        try{
+            return Cart::count();
+        }
+        catch (Exception $ex)
+        {
+
+        }
+    }
 }

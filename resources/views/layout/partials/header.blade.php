@@ -45,7 +45,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div>
             <div class="cart">
                 @if (Cart::count() > 0)
-                    <p>Welcome to our Online Store! <span><a href="{{ route('cart') }}">Cart:</a></span><div id="dd" class="wrapper-dropdown-2"> {{ Cart::count() }} item(s) - {{ Cart::total() . 'VND' }}
+                    <p>Welcome to our Online Store! <span><a href="{{ route('cart') }}">Cart:</a></span><div id="dd" class="wrapper-dropdown-2"> {{ Cart::count() }} item(s) - <span>{{ Cart::total() . 'VND' }}</span>
                         <ul class="dropdown">
                             <li>you have {{ Cart::count() }} items in your Shopping cart</li>
                         </ul></div></p>
