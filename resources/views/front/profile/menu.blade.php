@@ -14,7 +14,7 @@
             <a href="{{ route('profile.address') }}" class="nav-link">My Address</a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link">Change Password</a>
+            <a href="{{ route('profile.password_get') }}" class="nav-link">Change Password</a>
         </li>
     </ul>
 </div>

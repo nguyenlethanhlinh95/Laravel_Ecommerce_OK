@@ -46,13 +46,22 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Product Stock</label>
+                            <input value="{{ $pro->stock }}" class="form-control" name="stock" placeholder="Prodcut stock">
+                        </div>
+
+                        <div class="form-group">
                             <label>Description</label>
-                            <input value="{{ $pro->description }}" class="form-control" name="description" placeholder="Description">
+                            <textarea id="editor1" class="form-control" name="description" placeholder="Description">
+                                {{ $pro->description }}
+                            </textarea>
                         </div>
 
                         <div class="form-group">
                             <label>Content</label>
-                            <input value="{{ $pro->content }}" class="form-control" name="content" placeholder="content">
+                            <textarea id="editor2" class="form-control" name="content" placeholder="content">
+                                {{ $pro->content }}
+                            </textarea>
                         </div>
 
                         <div class="form-group">

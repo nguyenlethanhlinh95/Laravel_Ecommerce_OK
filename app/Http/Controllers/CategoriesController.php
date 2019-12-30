@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -22,16 +23,18 @@ class CategoriesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public  $category;
-    public function __construct()
+    public $categoryRepository;
+    public function __construct(CategoryRepositoryInterface $category_repo)
     {
-        $this->category = new categoryDao();
+        //$this->category = new categoryDao();
+        $this->categoryRepository = $category_repo;
     }
 
     public function index()
     {
         //
-        $listAll = $this->category->getAllWithPagi();
-        $categories = $this->category->getAll();
+        $listAll = $this->categoryRepository->gettAllWithPagi();
+        $categories = $this->categoryRepository->getAll();
         return view('admin.categories.index', ['categories'=>$listAll, 'categories2' => $categories]);
     }
 
@@ -43,8 +46,7 @@ class CategoriesController extends Controller
     public function create()
     {
         //
-        $categories = $this->category->getAll();
-
+        $categories = $this->categoryRepository->getAll();
         return view('admin.categories.create', ['categories'=>$categories]);
     }
 
@@ -90,7 +92,7 @@ class CategoriesController extends Controller
     public function show($id)
     {
         //
-        $cat = $this->category->getDetail($id);
+        $cat = $this->categoryRepository->getDetail($id);
         return view('admin.categories.show', ['cate' => $cat]);
     }
 
@@ -103,8 +105,8 @@ class CategoriesController extends Controller
     public function edit($id)
     {
         //
-        $category = $this->category->getDetail($id);
-        $categories = $this->category->getAll();
+        $category = $this->categoryRepository->getDetail($id);
+        $categories = $this->categoryRepository->getAll();
         return view('admin.categories.detail', ['category'=>$category, 'categories'=>$categories]);
     }
 
@@ -118,8 +120,7 @@ class CategoriesController extends Controller
     public function update(CategoryRequest $request, $id)
     {
         try{
-            $cate = $this->category->getDetail($id);
-
+            $cate = $this->categoryRepository->getDetail($id);
             $input = $request->all();
             $cate->fill($input)->save();
 
@@ -131,8 +132,6 @@ class CategoriesController extends Controller
             Session::flash('err', 'You not updated a category.');
             return redirect()->back();
         }
-
-
     }
 
     /**
@@ -145,7 +144,7 @@ class CategoriesController extends Controller
     {
         //
         try{
-            $status =  $this->category->deleteCategory($id);
+            $status =  $this->categoryRepository->delete($id);
             if ($status)
             {
                 Session::flash('suc', 'You succesfully Deleted a category.');
@@ -165,80 +164,3 @@ class CategoriesController extends Controller
     }
 }
 
-
-class CategoryDao extends Category
-{
-    public function getAllWithPagi()
-    {
-        $page=\Config::get('app.page');
-        return Category::paginate($page);
-    }
-    public function getAll()
-    {
-        try{
-            return Category::all();
-        }
-        catch (Exception $ex)
-        {
-            return null;
-        }
-
-    }
-    public function getAllSmall()
-    {
-        try{
-            $data = DB::table('categories')
-                ->pluck('id', 'name');
-            return $data;
-        }
-        catch (Exception $ex)
-        {
-            return null;
-        }
-
-    }
-    public function getDetail($id)
-    {
-        return Category::find($id);
-    }
-
-    public function insert(Category $catItem)
-    {
-        try{
-            $cate = new Category;
-
-            $cate->name = $catItem->name;
-            $cate->slug = $catItem->slug;
-            $cate->description = $catItem->description;
-
-            $cate->save();
-            return true;
-        }
-        catch (Exception $ex)
-        {
-            return false;
-        }
-    }
-
-    public function deleteCategory($id)
-    {
-        try{
-            $cat = $this->getDetail($id);
-            if ($cat != null)
-            {
-                $cat->delete();
-
-                return true;
-            }
-            return false;
-        }
-        catch (Exception $ex)
-        {
-
-            return false;
-        }
-
-    }
-
-
-}

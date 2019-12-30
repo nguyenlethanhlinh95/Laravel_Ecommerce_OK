@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CategoryProduct;
 use App\Http\Requests\CategoryProductRequest;
+use App\Repositories\CategoryProduct\CategoryProductRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -11,10 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryProductController extends Controller
 {
-    private $cateProductDao = null;
-    public function __construct()
+    //private $cateProductDao = null;
+
+    //private $category_product_repository;
+    public function __construct(CategoryProductRepositoryInterface $categoryProductRepo)
     {
-        $this->cateProductDao = new CategoryProductDao();
+        //$this->cateProductDao = new CategoryProductDao();
+        $this->category_product_repository = $categoryProductRepo;
     }
 
     /**
@@ -28,8 +32,8 @@ class CategoryProductController extends Controller
     public function index()
     {
         //
-        $listAll = $this->cateProductDao->getAllWithPagi();
-        $categories = $this->cateProductDao->getAllSmall();
+        $listAll = $this->category_product_repository->getAllPagi();
+        $categories = $this->category_product_repository->getAllSmall();
         return view('admin.categories_product.index', compact('listAll', 'categories'));
     }
 
@@ -41,7 +45,7 @@ class CategoryProductController extends Controller
     public function create()
     {
         //
-        $getCateries = $this->cateProductDao->getAllSmall();
+        $getCateries = $this->category_product_repository->getAllSmall();
         return view('admin.categories_product.create',compact('getCateries'));
     }
 
@@ -75,7 +79,7 @@ class CategoryProductController extends Controller
     public function show($id)
     {
         //
-        $cate = $this->cateProductDao->getDetail($id);
+        $cate = $this->category_product_repository->getDetail($id);
         return view('admin.categories_product.show', compact('cate'));
     }
 
@@ -88,8 +92,8 @@ class CategoryProductController extends Controller
     public function edit($id)
     {
         //
-        $category = $this->cateProductDao->getDetail($id);
-        $categories = $this->cateProductDao->getAllSmall();
+        $category = $this->category_product_repository->getDetail($id);
+        $categories = $this->category_product_repository->getAllSmall();
         return view('admin.categories_product.detail', compact('categories', 'category'));
     }
 
@@ -104,7 +108,7 @@ class CategoryProductController extends Controller
     {
         //
         try{
-            $cate = $this->cateProductDao->getDetail($id);
+            $cate = $this->category_product_repository->getDetail($id);
 
             $input = $request->all();
             $cate->fill($input)->save();
@@ -130,7 +134,7 @@ class CategoryProductController extends Controller
     {
         //
         try{
-            $status =  $this->cateProductDao->deleteCategory($id);
+            $status =  $this->category_product_repository->delete($id);
             if ($status)
             {
                 Session::flash('suc', 'You succesfully Deleted a category.');
@@ -150,85 +154,4 @@ class CategoryProductController extends Controller
     }
 }
 
-
-/**
- * Class CategoryProductDao
- * @package App\Http\Controllers
- * returns List category product
- */
-class CategoryProductDao extends CategoryProduct
-{
-    public function getAllWithPagi()
-    {
-        $page=\Config::get('app.page');
-        return CategoryProduct::paginate($page);
-    }
-    public function getAll()
-    {
-        try{
-            return CategoryProduct::all();
-        }
-        catch (Exception $ex)
-        {
-            return null;
-        }
-
-    }
-    public function getAllSmall()
-    {
-        try{
-            $data = DB::table('category_products')
-                ->pluck('id', 'name');
-            return $data;
-        }
-        catch (Exception $ex)
-        {
-            return null;
-        }
-
-    }
-    public function getDetail($id)
-    {
-        return CategoryProduct::find($id);
-    }
-
-    public function insert(CategoryProduct $catItem)
-    {
-        try{
-            $cate = new CategoryProduct;
-
-            $cate->name = $catItem->name;
-            $cate->slug = $catItem->slug;
-            $cate->description = $catItem->description;
-            $cate->parent_id = $catItem->parent_id;
-
-            $cate->save();
-            return true;
-        }
-        catch (Exception $ex)
-        {
-            return false;
-        }
-    }
-
-    public function deleteCategory($id)
-    {
-        try{
-            $cat = $this->getDetail($id);
-            if ($cat != null)
-            {
-                $cat->delete();
-
-                return true;
-            }
-            return false;
-        }
-        catch (Exception $ex)
-        {
-
-            return false;
-        }
-
-    }
-}
 

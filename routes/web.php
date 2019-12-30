@@ -40,9 +40,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/orders', 'ProfileController@orders')->name('profile.orders');
     Route::get('/address', 'ProfileController@address')->name('profile.address');
     Route::get('/thankyou', 'ProfileController@thankyou')->name('profile.thankyou');
-//    Route::post('/updateAddress', 'ProfileController@UpdateAddress');
-//    Route::get('/password', 'ProfileController@Password');
-//    Route::post('/updatePassword', 'ProfileController@updatePassword');
+    Route::post('/updateAddress', 'ProfileController@UpdateAddress')->name('profile.address_post');
+    Route::get('/password', 'ProfileController@password')->name('profile.password_get');
+    Route::post('/updatePassword', 'ProfileController@updatePassword')->name('profile.password_post');
 //    Route::get('/profile', function() {
 //        return view('profile.index');
 //    });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Post;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
@@ -19,17 +20,21 @@ class PostsController extends Controller
     private $post;
     private $cate;
 
-    public function __construct()
+    private $categoresRepository;
+
+    public function __construct(CategoryRepositoryInterface $category)
     {
         $this->post = new PostDao();
-        $this->cate = new CategoryDao();
+        //$this->cate = new CategoryDao();
+
+        $this->categoresRepository = $category;
     }
 
     public function index()
     {
         //
         $posts = $this->post->getAllWithPagi();
-        $categoryName = $this->cate->getAllSmall();
+        $categoryName = $this->categoresRepository->getAllSmall();
         return view('admin.posts.index', compact('posts', 'categoryName'));
     }
 
@@ -41,7 +46,7 @@ class PostsController extends Controller
     public function create()
     {
         //
-        $categories = $this->cate->getAll();
+        $categories = $this->categoresRepository->getAll();
         return view('admin.posts.create', compact('categories'));
     }
 
@@ -105,7 +110,7 @@ class PostsController extends Controller
         try
         {
             $post = $this->post->getDetail($id);
-            $categories = $this->cate->getAllSmall();
+            $categories = $this->categoresRepository->getAllSmall();
             return view('admin.posts.detail', compact('post', 'categories'));
         }
         catch (Exception $ex)

@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 //namespace DAO;
 
+use App\Http\Requests\ProductRequest;
 use App\Product;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\CategoryProduct\CategoryProductRepositoryInterface;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 //include "../../DAO/ProductDao.php";
 
 class ProductsController extends Controller
@@ -19,18 +25,23 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public  $product;
-    public $categories;
-    public function __construct()
+    //public  $product;
+    //public $categories;
+
+    private $product_repository;
+    private $category_repository;
+    public function __construct(ProductRepositoryInterface $productRepo, CategoryProductRepositoryInterface $cateRepo)
     {
-        $this->product = new ProductDao();
-        $this->categories = new CategoryDao();
+        $this->product_repository = $productRepo;
+        $this->category_repository = $cateRepo;
     }
 
     public function index()
     {
-        $products = $this->product->getAll();
-        $categories_product = $this->categories->getAll();
+        $products = $this->product_repository->getAll();
+        $categories_product = $this->category_repository->getAll();
+
+        //echo '<pre>'; print_r($products); echo '</pre>';
         return view('admin.products.index', compact('products', 'categories_product'));
     }
 
@@ -42,7 +53,8 @@ class ProductsController extends Controller
     public function create()
     {
         //
-        return view('admin.products.create');
+        $categories = $this->category_repository->getAll();
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -51,18 +63,11 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         try
         {
             $formInput = $request->except('image');
-
-            $this->validate($request, [
-                'pro_name' => 'required',
-                'pro_code' => 'required',
-                'pro_price' => 'required',
-                'image'=>'image|mimes:png,jpg,jpeg|max:10000'
-            ]);
 
             $image = $request->image;
             if($image){
@@ -89,7 +94,6 @@ class ProductsController extends Controller
         {
 
         }
-
     }
 
     /**
@@ -101,8 +105,9 @@ class ProductsController extends Controller
     public function show($id)
     {
         //
-        $pro = $this->product->getDetail($id);
-        return view('admin.products.show', ['pro' => $pro]);
+        $pro = $this->product_repository->getDetail($id);
+        //var_dump($pro);
+        return view('admin.products.show', compact('pro'));
     }
 
     /**
@@ -116,14 +121,13 @@ class ProductsController extends Controller
         //
         try
         {
-            $pro = $this->product->getDetail($id);
+            $pro = $this->product_repository->getDetail($id);
             return view('admin.products.detail', ['pro'=>$pro]);
         }
         catch (Exception $ex)
         {
             return redirect()->route('product.index');
         }
-
     }
 
     /**
@@ -147,7 +151,7 @@ class ProductsController extends Controller
                 'image'=>'image|mimes:png,jpg,jpeg|max:10000'
             ]);
 
-            $product = $this->product->getDetail($id);
+            $product = $this->product_repository->getDetail($id);
             $image = $request->image;
             if($image){
                 $datetime = date('mdYhis', time());
@@ -190,7 +194,7 @@ class ProductsController extends Controller
     {
         //
         try{
-            $status =  $this->product->deleteP($id);
+            $status = $this->product_repository->delete($id);
             if ($status)
             {
                 Session::flash('suc', 'You succesfully Deleted a product.');
@@ -209,78 +213,3 @@ class ProductsController extends Controller
         }
     }
 }
-
-
-class ProductDao extends Product
-{
-    public function getAll()
-    {
-        return Product::paginate(5);
-    }
-
-    public function getDetail($id)
-    {
-        return Product::find($id);
-    }
-
-    public function deleteP($id)
-    {
-        try{
-            $pro = $this->getDetail($id);
-            if ($pro != null)
-            {
-
-                $image_name = $pro->image;
-
-                if ($image_name != "image_null.jpg")
-                {
-                    $image_path = "images/" . $pro->image;  // Value is not URL but directory file path
-
-                    unlink($image_path);
-                }
-
-                $pro->delete();
-
-                return true;
-            }
-            return false;
-        }
-        catch (Exception $ex)
-        {
-
-            return false;
-        }
-
-    }
-
-    public function getNewProduct()
-    {
-        try
-        {
-            $products = DB::table('products')
-                ->OrderBy('created_at', 'desc')
-                ->limit(4)
-                ->get();
-            return $products;
-        }
-        catch (Exception $ex)
-        {
-            $products = null;
-        }
-
-        $products = null;
-
-    }
-
-    public function getProductDetail($id)
-    {
-        $product = DB::table('products')
-                        ->find($id)
-                        ->get();
-        return $product;
-    }
-
-
-}
-
-

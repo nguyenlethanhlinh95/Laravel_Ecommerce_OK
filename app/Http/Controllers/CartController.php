@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Cart\CartRepositoryInterface;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Controllers\ProductDao;
@@ -11,18 +12,18 @@ use Illuminate\Support\Facades\Session;
 class CartController extends Controller
 {
     //
-    private $cartDao;
-    public function __construct()
+    private $cart_repository;
+    public function __construct(CartRepositoryInterface $cartRepo)
     {
-        $this->cartDao = new CartDao();
+        $this->cart_repository = $cartRepo;
     }
 
     public function index()
     {
         try {
-            $boolCart = $this->cartDao->boolCheckCart();
+            $boolCart = $this->cart_repository->boolCheckCart();
             if ($boolCart > 0) {
-                $cartItems = $this->cartDao->gettAllItemCart();
+                $cartItems = $this->cart_repository->gettAllItemCart();
                 return view('front.cart.index', ['cartItems' => $cartItems]);
             } else {
                 return view('front.cart.empty');
@@ -37,15 +38,19 @@ class CartController extends Controller
 
     public function addItem($id)
     {
-        $boolAddItemCart = $this->cartDao->addCart($id);
-
-        Session::flash('suc', 'You succesfully added a product.');
-        return back();
+        $boolAddItemCart = $this->cart_repository->addCart($id);
+        if ($boolAddItemCart){
+            Session::flash('suc', 'You succesfully added a product.');
+            return back();
+        }else{
+            Session::flash('err', 'You err a product.');
+            return back();
+        }
     }
 
     public function destroy($id)
     {
-        $boolDeleteItemCart = $this->cartDao->deleteItemCart($id);
+        $boolDeleteItemCart = $this->cart_repository->deleteItemCart($id);
         if ($boolDeleteItemCart)
         {
             Session::flash('inf', 'You succesfully deleted a product.');
@@ -64,14 +69,14 @@ class CartController extends Controller
         $qty = $input['qty'];
         $rowId = $input['rowId'];
 
-        $boolUpdateItem = $this->cartDao->boolCartUpdateItem($rowId,$qty);
+        $boolUpdateItem = $this->cart_repository->boolCartUpdateItem($rowId,$qty);
 
         if ($boolUpdateItem)
         {
-            $cartItem = $this->cartDao->getCartItem($rowId);
-            $total = $this->cartDao->getTotal();
-            $tax = $this->cartDao->getTax();
-            $subtotal = $this->cartDao->getSubTotal();
+            $cartItem = $this->cart_repository->getCartItem($rowId);
+            $total = $this->cart_repository->getTotal();
+            $tax = $this->cart_repository->getTax();
+            $subtotal = $this->cart_repository->getSubTotal();
 
             return response()->json(['data'=>$cartItem, 'total'=> $total, 'tax'=>$tax, 'subtotal' => $subtotal], 200);
         }
@@ -82,128 +87,4 @@ class CartController extends Controller
         }
     }
 
-}
-
-
-class CartDao
-{
-    private $product;
-
-    public function __construct()
-    {
-        $this->product = new ProductDao();
-    }
-
-    public function addCart($id)
-    {
-        try{
-            $product = $this->product->getDetail($id);
-            Cart::add($id, $product->pro_name, 1, $product->pro_price, ['img' => $product->image]);
-            return true;
-        }
-        catch (Exception $ex)
-        {
-            return false;
-        }
-
-    }
-
-    public function gettAllItemCart()
-    {
-        return Cart::content();
-    }
-
-    public function boolCheckCart()
-    {
-        if (Cart::count()>0)
-        {
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public function deleteItemCart($id)
-    {
-        try
-        {
-            Cart::remove($id);
-            return true;
-        }
-        catch (Exception $ex)
-        {
-            return false;
-        }
-    }
-
-    public function boolCartUpdateItem($rowId, $qty)
-    {
-        try{
-            Cart::update($rowId, $qty);
-            return true;
-        }
-        catch (Exception $ex)
-        {
-            return false;
-        }
-    }
-
-    public function getCartItem($id)
-    {
-        try
-        {
-            return Cart::get($id);
-        }
-        catch (Exception $ex)
-        {
-
-        }
-
-    }
-
-    public function getSubTotal()
-    {
-        try{
-            return Cart::subtotal();
-
-        }
-        catch (Exception $ex)
-        {
-
-        }
-    }
-
-    public function getTax()
-    {
-        try{
-            return Cart::tax();
-        }
-        catch (Exception $ex)
-        {
-
-        }
-    }
-
-    public function getTotal()
-    {
-        try{
-            return Cart::total();
-        }
-        catch (Exception $ex)
-        {
-
-        }
-    }
-
-    public function getCartCount()
-    {
-        try{
-            return Cart::count();
-        }
-        catch (Exception $ex)
-        {
-
-        }
-    }
 }

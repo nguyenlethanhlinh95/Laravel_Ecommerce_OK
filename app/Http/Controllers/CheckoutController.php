@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\Http\Requests\infomationCheckoutRequest;
+use App\Repositories\Cart\CartRepositoryInterface;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Order;
 use Illuminate\Http\Request;
@@ -15,11 +16,11 @@ class CheckoutController extends Controller
     /**
      * Cart variable
      */
-    private $cartDao;
+    private $cart_repository;
 
-    public function __construct()
+    public function __construct(CartRepositoryInterface $cart_repo)
     {
-        $this->cartDao = new CartDao();
+        $this->cart_repository = $cart_repo;
     }
 
     //
@@ -30,8 +31,8 @@ class CheckoutController extends Controller
             /**
              * return view checkout
              */
-            $getAllCartItems = $this->cartDao->gettAllItemCart();
-            $cartDao = $this->cartDao;
+            $getAllCartItems = $this->cart_repository->gettAllItemCart();
+            $cartDao = $this->cart_repository;
             return view('front.cart.checkOut', compact('getAllCartItems', 'cartDao'));
         }
         else

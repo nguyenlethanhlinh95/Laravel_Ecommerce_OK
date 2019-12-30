@@ -2,24 +2,24 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\CategoryProductDao;
+use App\Repositories\CategoryProduct\CategoryProductRepository;
+use App\Repositories\CategoryProduct\CategoryProductRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+
+use App\Repositories\User\UserRepository;
+use App\Repositories\User\UserRepositoryInterface;
+
+
 
 class AppServiceProvider extends ServiceProvider
 {
     private $catProduct = null;
     public function __construct()
     {
-        $this->catProduct = new CategoryProductDao();
+        $this->catProduct = new CategoryProductRepository();
     }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
 
 
 
@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         View::share('getCategoryProductViewShare', $this->catProduct->getAll()); // <= Truyền dữ liệu
     }
 
+
     /**
      * Register any application services.
      *
@@ -38,6 +39,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
+//        $this->app->singleton(
+//            UserRepositoryInterface::class,
+//            UserRepository::class
+//        );
+        //$this->app->singleton(UserRepositoryInterface::class, UserRepository::class);
+
     }
+
+
 }

@@ -6,7 +6,6 @@ use App\Order;
 use Illuminate\Http\Request;
 use Mockery\Exception;
 
-
 class OrderController extends Controller
 {
     /**
@@ -17,7 +16,7 @@ class OrderController extends Controller
     public function index()
     {
         //
-        return "123";
+        return view('front.profile.thankyou');
     }
 
     /**
@@ -88,22 +87,5 @@ class OrderController extends Controller
 }
 
 
-class OrderDao extends Order
-{
-//    public function getAllOrdersOfUserID($id)
-//    {
-//        try{
-//            $orders = DB::table('order_product')
-//                ->leftJoin('products', 'products.id', '=' , 'order_product.product_id')
-//                ->leftJoin('orders', 'orders.id', '=' , 'order_product.order_id')
-//                ->where('orders.user_id' , '=' , $id)
-//                ->get();
-//            return $orders;
-//        }
-//        catch (Exception $ex)
-//        {
-//            return null;
-//        }
-//
-//    }
-}
+
+

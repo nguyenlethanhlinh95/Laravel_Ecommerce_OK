@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\CategoryProduct\CategoryProductRepository;
+use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProductDao;
 use Mockery\Exception;
@@ -13,13 +15,13 @@ class HomeController extends Controller
      *
      * @return void
      */
-    private $proDao = null;
-    private $proCateDao = null;
+    private $product_repository;
+    private $product_category_repository;
 
-    public function __construct()
+    public function __construct(ProductRepositoryInterface $pro, CategoryProductRepository $cat)
     {
-        $this->proDao = new ProductDao();
-        $this->proCateDao = new CategoryProductDao();
+        $this->product_repository = $pro;
+        $this->product_category_repository = $cat;
     }
 
     /**
@@ -31,8 +33,8 @@ class HomeController extends Controller
     {
         try
         {
-            $newProduct = $this->proDao->getNewProduct();
-            $categorysProduct = $this->proCateDao->getAll();
+            $newProduct = $this->product_repository->getNewProduct(4);
+            $categorysProduct = $this->product_category_repository->getAll();
             return view('front.shop', compact('newProduct', 'categorysProduct'));
         }
         catch (\Exception $e)
@@ -44,10 +46,10 @@ class HomeController extends Controller
     public function productDetail($name, $id)
     {
         try{
-            $product = $this->proDao->getDetail($id);
+            $product = $this->product_repository->getDetail($id);
             if (isset($product))
             {
-                return view('front.product_detail', ['product'=> $product]);
+                return view('front.product_detail', compact('product'));
             }
             else
             {

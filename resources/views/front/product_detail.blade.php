@@ -38,22 +38,26 @@
                             <div id="container">
                                 <div id="products_example">
                                     <div id="products">
+                                        <img src="{{'images/' . $product->image}}" alt=" " />
+
                                         <div class="slides_container">
-                                            <a href="#" target="_blank"><img src="images/productslide-1.jpg" alt=" " /></a>
-                                            <a href="#" target="_blank"><img src="images/productslide-2.jpg" alt=" " /></a>
-                                            <a href="#" target="_blank"><img src="images/productslide-3.jpg" alt=" " /></a>
-                                            <a href="#" target="_blank"><img src="images/productslide-4.jpg" alt=" " /></a>
-                                            <a href="#" target="_blank"><img src="images/productslide-5.jpg" alt=" " /></a>
-                                            <a href="#" target="_blank"><img src="images/productslide-6.jpg" alt=" " /></a>
+                                            <a href="#" target="_blank">
+                                                {{--<img src="{{'images/'}} {{$product->image}}" alt=" " />--}}
+                                            </a>
+                                            {{--<a href="#" target="_blank"><img src="images/productslide-2.jpg" alt=" " /></a>--}}
+                                            {{--<a href="#" target="_blank"><img src="images/productslide-3.jpg" alt=" " /></a>--}}
+                                            {{--<a href="#" target="_blank"><img src="images/productslide-4.jpg" alt=" " /></a>--}}
+                                            {{--<a href="#" target="_blank"><img src="images/productslide-5.jpg" alt=" " /></a>--}}
+                                            {{--<a href="#" target="_blank"><img src="images/productslide-6.jpg" alt=" " /></a>--}}
                                         </div>
-                                        <ul class="pagination">
-                                            <li><a href="#"><img src="images/thumbnailslide-1.jpg" alt=" " /></a></li>
-                                            <li><a href="#"><img src="images/thumbnailslide-2.jpg" alt=" " /></a></li>
-                                            <li><a href="#"><img src="images/thumbnailslide-3.jpg" alt=" " /></a></li>
-                                            <li><a href="#"><img src="images/thumbnailslide-4.jpg" alt=" " /></a></li>
-                                            <li><a href="#"><img src="images/thumbnailslide-5.jpg" alt=" " /></a></li>
-                                            <li><a href="#"><img src="images/thumbnailslide-6.jpg" alt=" " /></a></li>
-                                        </ul>
+                                        {{--<ul class="pagination">--}}
+                                            {{--<li><a href="#"><img src="images/thumbnailslide-1.jpg" alt=" " /></a></li>--}}
+                                            {{--<li><a href="#"><img src="images/thumbnailslide-2.jpg" alt=" " /></a></li>--}}
+                                            {{--<li><a href="#"><img src="images/thumbnailslide-3.jpg" alt=" " /></a></li>--}}
+                                            {{--<li><a href="#"><img src="images/thumbnailslide-4.jpg" alt=" " /></a></li>--}}
+                                            {{--<li><a href="#"><img src="images/thumbnailslide-5.jpg" alt=" " /></a></li>--}}
+                                            {{--<li><a href="#"><img src="images/thumbnailslide-6.jpg" alt=" " /></a></li>--}}
+                                        {{--</ul>--}}
                                     </div>
                                 </div>
                             </div>
@@ -65,30 +69,31 @@
                                 <p>Price: <span>{{ $product->pro_price }} VND</span></p>
                             </div>
                             <div class="available">
-                                <p>Available Options :</p>
-                                <ul>
-                                    <li>Color:
-                                        <select>
-                                            <option>Silver</option>
-                                            <option>Black</option>
-                                            <option>Dark Black</option>
-                                            <option>Red</option>
-                                        </select></li>
-                                    <li>Size:<select>
-                                            <option>Large</option>
-                                            <option>Medium</option>
-                                            <option>small</option>
-                                            <option>Large</option>
-                                            <option>small</option>
-                                        </select></li>
-                                    <li>Quality:<select>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select></li>
-                                </ul>
+                                <p>Available Options : {{ $product->stock }} In stock</p>
+
+                                {{--<ul>--}}
+                                    {{--<li>Color:--}}
+                                        {{--<select>--}}
+                                            {{--<option>Silver</option>--}}
+                                            {{--<option>Black</option>--}}
+                                            {{--<option>Dark Black</option>--}}
+                                            {{--<option>Red</option>--}}
+                                        {{--</select></li>--}}
+                                    {{--<li>Size:<select>--}}
+                                            {{--<option>Large</option>--}}
+                                            {{--<option>Medium</option>--}}
+                                            {{--<option>small</option>--}}
+                                            {{--<option>Large</option>--}}
+                                            {{--<option>small</option>--}}
+                                        {{--</select></li>--}}
+                                    {{--<li>Quality:<select>--}}
+                                            {{--<option>1</option>--}}
+                                            {{--<option>2</option>--}}
+                                            {{--<option>3</option>--}}
+                                            {{--<option>4</option>--}}
+                                            {{--<option>5</option>--}}
+                                        {{--</select></li>--}}
+                                {{--</ul>--}}
                             </div>
                             <div class="share-desc">
                                 <div class="share">
@@ -98,7 +103,7 @@
                                         <li><a href="#"><img src="images/twitter.png" alt="" /></a></li>
                                     </ul>
                                 </div>
-                                <div class="button"><span><a href="#">Add to Cart</a></span></div>
+                                <div class="button"><span><a href="{{ route('addItemCart', ['id'=>$product->id]) }}">Add to Cart</a></span></div>
                                 <div class="clear"></div>
                             </div>
                             <div class="wish-list">
@@ -120,9 +125,8 @@
                             </ul>
                             <div class="resp-tabs-container">
                                 <div class="product-desc">
-                                    <p>Lorem Ipsum is simply dummy text of the <span>printing and typesetting industry</span>. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, <span>when an unknown printer took a galley of type and scrambled</span> it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.<span> It has survived not only five centuries</span>, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>					</div>
+                                    {{ $product->description }}
+                                </div>
 
                                 <div class="product-tags">
                                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>

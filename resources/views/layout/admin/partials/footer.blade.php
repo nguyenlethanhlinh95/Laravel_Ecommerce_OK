@@ -17,7 +17,10 @@
 <script src="assets/admin/js/demo/dashboard-demo.js"></script>
 
 <script src="{{ asset('assets/ckeditor/ckeditor.js') }}"></script>
-<script> CKEDITOR.replace('editor1'); </script>
+<script>
+    CKEDITOR.replace('editor1');
+    CKEDITOR.replace('editor2');
+</script>
 
 <script src="js/toastr.min.js"></script>
 

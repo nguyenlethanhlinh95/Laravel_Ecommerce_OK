@@ -1,6 +1,5 @@
 @include('layout.partials.header')
 
-
 <div class="header_slide">
     <?php
     $routeName = Route::current()->getName();
