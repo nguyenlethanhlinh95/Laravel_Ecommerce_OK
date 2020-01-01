@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Cart\CartRepositoryInterface;
 use Illuminate\Http\Request;
-use Gloudemans\Shoppingcart\Facades\Cart;
-use App\Http\Controllers\ProductDao;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Session;
 

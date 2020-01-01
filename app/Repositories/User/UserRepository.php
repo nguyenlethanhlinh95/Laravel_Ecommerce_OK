@@ -9,6 +9,7 @@
 namespace App\Repositories\User;
 
 use App\Address;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,11 +22,22 @@ class UserRepository implements UserRepositoryInterface
         return Auth::user()->id;
     }
 
+    public function getUserById($user_id)
+    {
+        try{
+            $user = User::find($user_id);
+            if ($user != null){
+                return $user;
+            }else{
+                return null;
+            }
+        }
+        catch (Exception $exception){
+            return null;
+        }
+    }
+
     public function getAddressByUserId($user_id){
-//        $address_data = DB::table('address')
-//            ->where('user_id', '=', $user_id)
-//            ->orderby('id', 'DESC')
-//            ->get();
         $address_data = Address::where('user_id',$user_id)->orderBy('id','DESC')->first();
         return $address_data;
     }

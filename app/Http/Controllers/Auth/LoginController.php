@@ -8,6 +8,8 @@ use Auth;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
+use Gloudemans\Shoppingcart\Facades\Cart;
+
 
 class LoginController extends Controller
 {
@@ -43,6 +45,7 @@ class LoginController extends Controller
 
     public function logout(Request $request) {
         Auth::logout();
+        Cart::destroy();
         return redirect()->route('home');
     }
 

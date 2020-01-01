@@ -18,31 +18,36 @@ Auth::routes();
  * Route page
  * */
 Route::get('/', 'HomeController@index')->name('index');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/shop', 'HomeController@index')->name('shop');
-Route::get('/contact', 'HomeController@contact')->name('contact');
-Route::get('/product-detail/{name}-{id}', 'HomeController@productDetail')->name('product_view_detail');
+Route::get('/home.html', 'HomeController@index')->name('home');
+Route::get('/shop.html', 'HomeController@index')->name('shop');
+Route::get('/contact.html', 'HomeController@contact')->name('contact');
+Route::get('/product-detail/{name}.{id}.html', 'HomeController@productDetail')->name('product_view_detail');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 /**
  * Cart Route
  */
-Route::get('/cart','CartController@index' )->name('cart');
-Route::get('/cart/addItem/{id}', 'CartController@addItem')->name('addItemCart');
-Route::get('/cart/removeItem/{id}', 'CartController@destroy')->name('removeItemCart');
-Route::post('/cart/updateItem', 'CartController@update')->name('updateItemCart');
+Route::get('/cart.html','CartController@index' )->name('cart');
+Route::get('/cart/addItem/{id}.html', 'CartController@addItem')->name('addItemCart');
+Route::get('/cart/removeItem/{id}.html', 'CartController@destroy')->name('removeItemCart');
+Route::post('/cart/updateItem.html', 'CartController@update')->name('updateItemCart');
 
 //CheckOut Route
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/checkout', 'CheckoutController@index')->name('checkout');
-    Route::post('/formvalidate', 'CheckoutController@addressValidate')->name('checkout.addressValidate');
-    Route::get('/profile', 'ProfileController@index')->name('profile.index');
-    Route::get('/orders', 'ProfileController@orders')->name('profile.orders');
-    Route::get('/address', 'ProfileController@address')->name('profile.address');
-    Route::get('/thankyou', 'ProfileController@thankyou')->name('profile.thankyou');
-    Route::post('/updateAddress', 'ProfileController@UpdateAddress')->name('profile.address_post');
-    Route::get('/password', 'ProfileController@password')->name('profile.password_get');
-    Route::post('/updatePassword', 'ProfileController@updatePassword')->name('profile.password_post');
+    Route::get('/checkout.html', 'CheckoutController@index')->name('checkout');
+    Route::post('/formvalidate.html', 'CheckoutController@addressValidate')->name('checkout.addressValidate');
+    Route::get('/profile.html', 'ProfileController@index')->name('profile.index');
+    Route::get('/orders.html', 'ProfileController@orders')->name('profile.orders');
+    Route::get('/address.html', 'ProfileController@address')->name('profile.address');
+    Route::get('/thankyou.html', 'ProfileController@thankyou')->name('profile.thankyou');
+    Route::post('/updateAddress.html', 'ProfileController@UpdateAddress')->name('profile.address_post');
+    Route::get('/password.html', 'ProfileController@password')->name('profile.password_get');
+    Route::post('/updatePassword.html', 'ProfileController@updatePassword')->name('profile.password_post');
+
+    Route::post('/addToWishList.html', 'HomeController@addToWishList')->name('addToWishList');
+    Route::get('/removeWishList/{id}.html', 'HomeController@destroyWishlist')->name('removeWishlist');
+
+    Route::get('/wishlist.html', 'HomeController@viewWishList')->name('view_wishList');
 //    Route::get('/profile', function() {
 //        return view('profile.index');
 //    });

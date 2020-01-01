@@ -16,6 +16,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href="assets/front/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="assets/front/css/mystyle.css" rel="stylesheet" type="text/css" media="all"/>
     <link rel="stylesheet" href="css/toastr.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script type="text/javascript" src="assets/front/js/jquery.min.js"></script>
     <script type="text/javascript" src="assets/front/js/move-top.js"></script>

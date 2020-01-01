@@ -9,11 +9,21 @@
 namespace App\Repositories\Product;
 
 use App\Product;
+use App\Repositories\User\UserRepository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
+use App\Wishlist;
+use App\Repositories\User\UserRepositoryInterface;
 
 class ProductRepository implements ProductRepositoryInterface
 {
+    private $user_repository;
+    public function __construct()
+    {
+        $this->user_repository = new UserRepository();
+    }
+
     public function getAll(){
         return Product::paginate(5);
         //return Product::all();
@@ -63,6 +73,108 @@ class ProductRepository implements ProductRepositoryInterface
             return Product::find($id);
         }catch (Exception $exception){
             return null;
+        }
+    }
+
+    /**
+     * @param $user_id
+     * @param $pro_id
+     * @return bool
+     */
+    public function addWishList($user_id, $pro_id){
+        try{
+            $wishlist = new Wishlist();
+            $wishlist->user_id = $user_id;
+            $wishlist->pro_id = $pro_id;
+            $wishlist->save();
+            return true;
+        }
+        catch (Exception $exception){
+            return false;
+        }
+
+    }
+
+    /**
+     * @param $user_id
+     * @param $pro_id
+     * @return bool
+     */
+    public function checkWishList($user_id, $pro_id){
+        try{
+            // kiem tra user trong wishlist
+            // kiem tra san pham trong user wishlist
+            $isCheckUserHaveWishList = $this->checkUserWishList($user_id);
+            if ($isCheckUserHaveWishList){
+
+            }
+            else{
+
+            }
+            return true;
+        }catch (Exception $exception){
+            return false;
+        }
+    }
+
+    public function checkProductWishList($user_id, $pro_id){
+        try{
+            $isCheck = DB::table('wishlists')
+                ->where([
+                    ['user_id', '=',$user_id ],
+                    ['pro_id', '=', $pro_id]
+                ])
+                ->first();
+            if ($isCheck != null){
+                return true;
+            }
+            return false;
+
+        }catch (Exception $exception){
+            return false;
+        }
+    }
+
+    public function viewWishList($user_id){
+        try{
+            $user= $this->user_repository->getUserById($user_id);
+            $products = $user->products()->get();
+            if ($products != null){
+                return $products;
+            }else{
+                return null;
+            }
+        }catch (Exception $exception){
+            return null;
+        }
+    }
+
+    public function countWishlist($user_id){
+        try{
+            $user= $this->user_repository->getUserById($user_id);
+            $count_product = $user->products()->count();
+            if ($count_product != 0){
+                return $count_product;
+            }else{
+                return 0;
+            }
+        }catch (Exception $exception){
+            return 0;
+        }
+    }
+
+    public function removeWishlist($user_id, $pro_id){
+        try{
+            DB::table('wishlists')
+                ->where([
+                    ['user_id',$user_id],
+                    ['pro_id',$pro_id]
+                ])
+                ->delete();
+            return true;
+        }
+        catch (Exception $exception){
+            return false;
         }
     }
 }

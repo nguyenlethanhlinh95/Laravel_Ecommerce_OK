@@ -12,6 +12,8 @@ interface UserRepositoryInterface
 {
     public function getId();
 
+    public function getUserById($user_id);
+
     public function getAddressByUserId($user_id);
 
     public function getUser();

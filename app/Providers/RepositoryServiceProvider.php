@@ -64,5 +64,13 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Cart\CartRepository::class
         );
 
+        /*
+         * Cart repository
+         */
+        $this->app->singleton(
+            \App\Repositories\Recommends\RecommendsRepositoryInterface::class,
+            \App\Repositories\Recommends\RecommendsRepository::class
+        );
+
     }
 }

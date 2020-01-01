@@ -111,3 +111,18 @@
     }
 }
 
+.btn-wishlist{
+    color: #fff !important;
+    padding: 6px 15px;
+    font-weight: 700;
+    background: #ff8f00 !important;
+    text-transform: uppercase;
+    border: 1px solid #f2f2f2;
+    transition: .3s;
+    border-radius: 3px;
+    &:hover{
+        background: #cc7911 !important;
+        cursor: pointer;
+    }
+}
+

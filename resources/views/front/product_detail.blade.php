@@ -106,12 +106,29 @@
                                 <div class="button"><span><a href="{{ route('addItemCart', ['id'=>$product->id]) }}">Add to Cart</a></span></div>
                                 <div class="clear"></div>
                             </div>
-                            <div class="wish-list">
-                                <ul>
-                                    <li class="wish"><a href="#">Add to Wishlist</a></li>
-                                    <li class="compare"><a href="#">Add to Compare</a></li>
-                                </ul>
-                            </div>
+
+                            @if (isset($checkProductWishList))
+                                @if ($checkProductWishList)
+                                <h3>Already Added to Wishlist
+                                    <a href="{{ route('view_wishList') }}">WishList</a>
+                                </h3>
+                                @else
+                                    <div class="wish-list">
+                                        {!! Form::open(['route'=>'addToWishList', 'method'=> 'post']) !!}
+                                        <ul>
+                                            <li class="wish">
+                                                <input type="hidden" value="{{ $product->id }}" name="pro_id">
+                                                <input class="btn btn-warning btn-wishlist" type="submit" value="Add to Wishlist" name="btn btn-primary">
+
+                                            </li>
+                                            <li class="compare">
+                                                <a href="#">Add to Compare</a>
+                                            </li>
+                                        </ul>
+                                        {{ Form::close() }}
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                         <div class="clear"></div>
                     </div>
@@ -217,6 +234,10 @@
                             </div>
                         </div>
                     </div>
+
+                    @if (isset($getRecommends))
+                        @include('front.recommends', ['getRecommends'=>$getRecommends])
+                    @endif
                 </div>
                 <div class="rightsidebar span_3_of_1">
                     <h2>CATEGORIES</h2>

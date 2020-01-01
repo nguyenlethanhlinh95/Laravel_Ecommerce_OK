@@ -25,7 +25,7 @@
     <div class="section group">
             @foreach($newProduct as $item)
                 <div class="grid_1_of_4 images_1_of_4">
-                <a href="{{ route('product_view_detail', ['id'=> $item->id, 'name'=> $item->pro_name]) }}"><img src="images/{{ $item->image }}" alt="{{ $item->pro_name }}" /></a>
+                <a href="{{ route('product_view_detail', ['id'=> $item->id, 'name'=> str_slug($item->pro_name) ]) }}"><img src="images/{{ $item->image }}" alt="{{ $item->pro_name }}" /></a>
                 <h2>{{ $item->pro_name }} </h2>
                 <div class="price-details">
                     <div class="price-number">
