@@ -28,7 +28,7 @@ class ProductRequest extends FormRequest
             'pro_name' => 'required',
             'pro_code' => 'required',
             'pro_price' => 'required',
-            'id_category'=> '',
+            'id_category'=> 'required',
             'image'=>'image|mimes:png,jpg,jpeg|max:10000',
             'stock'=> ''
         ];

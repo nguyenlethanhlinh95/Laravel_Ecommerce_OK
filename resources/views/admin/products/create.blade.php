@@ -9,7 +9,9 @@
         Create product
     @endsection
     <div class="row">
-        <div class="col-lg-12">
+        {!! Form::open(['route'=> 'product.store', 'method' => 'post', 'files'=> 'true' ]) !!}
+
+        <div class="col-lg-9">
 
             <div class="">
                 <p><a href="{{ route('product.index') }}">Back List product</a></p>
@@ -23,7 +25,6 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            {!! Form::open(['route'=> 'product.store', 'method' => 'post', 'files'=> 'true' ]) !!}
                                 <div class="form-group">
                                     <label>Product name</label>
                                     <input value="{{ old('pro_name') }}" class="form-control" required minlength="5" name="pro_name" placeholder="Prodcut name">
@@ -60,26 +61,71 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Description</label>
-                                    <input type="text" value="{{ old('description') }}" id="editor2" class="form-control" name="description" placeholder="Description">
+                                    <label>Content</label>
+                                    <textarea id="editor" type="text" value="{{ old('content') }}"  class="form-control" name="content" placeholder="Content">
+
+                                    </textarea>
                                 </div>
 
-                            <div class="form-group">
-                                <label>Content</label>
-                                <input type="text" value="{{ old('content') }}" id="editor1" class="form-control" name="content" placeholder="Content"></input>
-                            </div>
 
-                            <div class="form-group">
-                                {{ Form::label('image', 'Image') }}
-                                {{ Form::file('image',array('class' => 'form-control', 'name'=>'image')) }}
-                            </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea id="editor1" type="text" value="{{ old('description') }}" class="form-control" name="description" placeholder="Description">
+                                    </textarea>
+                                </div>
 
-                                <input type="submit" value="Submit" class="btn btn-primary">
-                            {{ Form::close() }}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-3">
+
+            <div class="">
+                <div class="panel panel-default panel_custom">
+                    <div class="panel-heading">
+                        <span>Đăng</span>
+                        <span class="icon_right">
+                            <i class="fa fa-caret-down fa-2x" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+                    <div class="panel-body">
+                        <input type="submit" value="Submit" class="btn btn-primary">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="panel panel-default panel_custom">
+                    <div class="panel-heading">
+                        <span>Product image</span>
+                        <span class="icon_right">
+                            <i class="fa fa-caret-down fa-2x" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            {{ Form::file('image',array('class' => 'form-control', 'name'=>'image')) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {{ Form::close() }}
+
     </div>
 @endsection
+
+@section('js')
+    <script>
+        var editor = CKEDITOR.replace( 'editor' );
+        var editor1 = CKEDITOR.replace( 'editor1' );
+    </script>
+@stop
+
+
+

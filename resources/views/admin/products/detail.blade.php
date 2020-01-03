@@ -51,18 +51,20 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Content</label>
+                            <textarea id="editor1" class="form-control" name="content" placeholder="content">
+                                {{ $pro->content }}
+                            </textarea>
+                        </div>
+
+
+                        <div class="form-group">
                             <label>Description</label>
-                            <textarea id="editor1" class="form-control" name="description" placeholder="Description">
+                            <textarea id="editor" class="form-control" name="description" placeholder="Description">
                                 {{ $pro->description }}
                             </textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label>Content</label>
-                            <textarea id="editor2" class="form-control" name="content" placeholder="content">
-                                {{ $pro->content }}
-                            </textarea>
-                        </div>
 
                         <div class="form-group">
                             {{ Form::label('image', 'Image') }}
@@ -85,3 +87,10 @@
     </div>
 </div>
 @endsection
+
+@section('js')
+    <script>
+        var editor = CKEDITOR.replace( 'editor' );
+        var editor1 = CKEDITOR.replace( 'editor1' );
+    </script>
+@stop

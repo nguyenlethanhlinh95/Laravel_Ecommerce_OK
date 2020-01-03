@@ -1,7 +1,7 @@
 @extends('layout.admin.master')
 
 @section('header')
-    Categories Product
+    Product categories
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    List category product
+                    Product categories
                 </div>
 
                 <div class="panel-body">

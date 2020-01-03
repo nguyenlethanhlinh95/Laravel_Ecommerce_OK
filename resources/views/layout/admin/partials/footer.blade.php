@@ -9,6 +9,9 @@
 <!-- Page-Level Plugin Scripts - Dashboard -->
 <script src="assets/admin/js/plugins/morris/raphael-2.1.0.min.js"></script>
 <script src="assets/admin/js/plugins/morris/morris.js"></script>
+<script src="{{ asset('assets/admin/js/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('assets/admin/js/ckfinder/ckfinder.js') }}"></script>
+
 
 <!-- SB Admin Scripts - Include with every page -->
 <script src="assets/admin/js/sb-admin.js"></script>
@@ -16,11 +19,6 @@
 <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
 <script src="assets/admin/js/demo/dashboard-demo.js"></script>
 
-<script src="{{ asset('assets/ckeditor/ckeditor.js') }}"></script>
-<script>
-    CKEDITOR.replace('editor1');
-    CKEDITOR.replace('editor2');
-</script>
 
 <script src="js/toastr.min.js"></script>
 

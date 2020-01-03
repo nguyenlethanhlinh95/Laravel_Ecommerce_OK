@@ -1,0 +1,47 @@
+.red{
+  color: red;
+  &:hover{
+    color: #ab2323;
+  }
+}
+#wapper_page_attributes{
+  table{
+    thead{
+      border: 1px solid #f2f2f2;
+    }
+    tbody{
+      tr{
+        background-color: #f9f9f9;
+      }
+    }
+  }
+}
+
+// siderbar admin
+.panel_custom{
+  .panel-heading{
+    position: relative !important;
+    span.icon_right{
+      position: absolute ;
+      right: 25px;
+      border: 1px solid #7098bf;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      i{
+        padding-left: 3px;
+        color: #72777c;
+        &:hover{
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .panel-body{
+    text-align: right !important;
+    input{
+      display: inline-block;
+    }
+   // display: none;
+  }
+}

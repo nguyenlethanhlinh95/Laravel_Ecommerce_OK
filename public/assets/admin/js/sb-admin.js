@@ -2,6 +2,10 @@ $(function() {
 
     $('#side-menu').metisMenu();
 
+    $('.icon_right').click(function () {
+        var $this = $(this);
+        $this.parent().next().slideToggle('100', "linear");
+    });
 });
 
 //Loads the correct sidebar on window load,

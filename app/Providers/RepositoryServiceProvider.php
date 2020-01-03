@@ -72,5 +72,21 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Recommends\RecommendsRepository::class
         );
 
+        /*
+         * Attributes repository
+         */
+        $this->app->singleton(
+            \App\Repositories\Attributes\AttributesRepositoryInterface::class,
+            \App\Repositories\Attributes\AttributesRepository::class
+        );
+
+        /*
+         * Items Attributes repository
+         */
+        $this->app->singleton(
+            \App\Repositories\ItemsAttributes\ItemAttributesRepositoryInterface::class,
+            \App\Repositories\ItemsAttributes\ItemAttributesRepository::class
+        );
+
     }
 }

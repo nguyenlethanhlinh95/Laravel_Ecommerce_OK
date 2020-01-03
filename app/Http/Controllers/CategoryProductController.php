@@ -121,7 +121,6 @@ class CategoryProductController extends Controller
             Session::flash('err', 'You not updated a category.');
             return redirect()->back();
         }
-
     }
 
     /**

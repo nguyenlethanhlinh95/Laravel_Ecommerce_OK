@@ -64,7 +64,7 @@
                         </div>
                         <div class="desc span_3_of_2">
                             <h2>{{ $product->pro_name }}</h2>
-                            <p>{{ $product->description }}</p>
+                            <p>{!! $product->description !!}</p>
                             <div class="price">
                                 <p>Price: <span>{{ $product->pro_price }} VND</span></p>
                             </div>
@@ -142,7 +142,7 @@
                             </ul>
                             <div class="resp-tabs-container">
                                 <div class="product-desc">
-                                    {{ $product->description }}
+                                    {!! $product->description !!}
                                 </div>
 
                                 <div class="product-tags">

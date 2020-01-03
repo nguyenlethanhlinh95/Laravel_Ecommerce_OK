@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('stock');
             $table->string('image')->nullable();
             $table->string('spl_price')->nullable()->default('0');
-            $table->integer('id_category');
+            $table->integer('id_category')->unsigned();
             $table->string('description')->nullable();
             $table->string('content')->nullable();
             $table->boolean('new')->default('0');
@@ -30,10 +30,10 @@ class CreateProductsTable extends Migration
             //$table->integer('id_tag');
 
 //
-//            $table->foreign('id_category')
-//                ->references('id')
-//                ->on('categories')
-//                ->onDelete('cascade');
+            $table->foreign('id_category')
+                ->references('id')
+                ->on('category_products')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

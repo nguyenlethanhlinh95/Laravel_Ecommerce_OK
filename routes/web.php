@@ -11,14 +11,12 @@
 |
 */
 
-
-
 Auth::routes();
 /*
  * Route page
  * */
 Route::get('/', 'HomeController@index')->name('index');
-Route::get('/home.html', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/shop.html', 'HomeController@index')->name('shop');
 Route::get('/contact.html', 'HomeController@contact')->name('contact');
 Route::get('/product-detail/{name}.{id}.html', 'HomeController@productDetail')->name('product_view_detail');
@@ -66,8 +64,11 @@ Route::group(['prefix' => 'admin', 'middleware'=>['auth', 'admin']],
         {
             return view('admin.index');
         })->name('admin.index');
-
         Route::resource('product', 'ProductsController');
+        Route::resource('attribute', 'AttributesController');
+
+        Route::get('item-attribute/{id}', 'ItemsAttributesController@list_add')->name('items_list_attributes');
+        Route::resource('ItemsAttribute', 'ItemsAttributesController');
         Route::resource('category', 'CategoriesController');
         //Route::resource('new', 'NewsController');
         Route::resource('post', 'PostsController');
