@@ -8,6 +8,7 @@
 
 namespace App\Repositories\ItemsAttributes;
 
+use App\Attributes;
 use App\ItemsAttribute;
 use Mockery\Exception;
 
@@ -22,6 +23,29 @@ class ItemAttributesRepository implements ItemAttributesRepositoryInterface
             return null;
         }
     }
+
+    public function getItemsAttById($id)
+    {
+        try{
+            return Attributes::find($id)->itemsAttribute;
+        }
+        catch (Exception $exception){
+            return null;
+        }
+    }
+
+    public function getItemsAttByName($name)
+    {
+        try{
+            return Attributes::where('name',$name)
+                ->first()
+                ->itemsAttribute;
+        }
+        catch (Exception $exception){
+            return null;
+        }
+    }
+
 
     public function getDetail($id)
     {

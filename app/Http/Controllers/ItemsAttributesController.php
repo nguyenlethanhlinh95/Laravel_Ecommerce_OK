@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Attributes;
 use App\Http\Requests\ItemsAttributesRequest;
 use App\ItemsAttribute;
 use App\Repositories\ItemsAttributes\ItemAttributesRepositoryInterface;
@@ -20,9 +21,8 @@ class ItemsAttributesController extends Controller
     public function list_add($id)
     {
         try{
-            $items_attributes = $this->itemsAttributesRepository->getAll();
+            $items_attributes = $this->itemsAttributesRepository->getItemsAttById($id);
             $id = $id;
-            //dd($items_attributes);
             return view('admin.items_attributes.addnew_list_itemsAttributes', compact('items_attributes', 'id'));
         }
         catch (Exception $exception)

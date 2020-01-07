@@ -3,10 +3,10 @@
         <div class="input-group custom-search-form">
             <input type="text" class="form-control" placeholder="Search...">
             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
+                <button class="btn btn-default" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
         </div>
         <!-- /input-group -->
     </li>
@@ -25,6 +25,22 @@
         </ul>
         <!-- /.nav-second-level -->
     </li>
+
+    <li>
+        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Page<span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            <li>
+                <a href="{{ route('page.index') }}">All pages</a>
+            </li>
+            <li>
+                <a href="{{ route('page.create') }}">Add new</a>
+            </li>
+        </ul>
+        <!-- /.nav-second-level -->
+    </li>
+
+
+
     <li>
         <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Products<span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">

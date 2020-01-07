@@ -13,6 +13,10 @@ interface ItemAttributesRepositoryInterface
 {
     public function getAll();
 
+    public function getItemsAttById($id);
+
+    public function getItemsAttByName($name);
+
     public function getDetail($id);
 
     public function delete($id);

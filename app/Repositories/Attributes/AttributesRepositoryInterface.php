@@ -8,6 +8,8 @@
 
 namespace App\Repositories\Attributes;
 
+use Mockery\Exception;
+
 
 interface AttributesRepositoryInterface
 {
@@ -17,4 +19,7 @@ interface AttributesRepositoryInterface
 
     public function delete($id);
 
+    public function getDetailAttribute($name);
+
+    public function getAllItemsAtt($att);
 }

@@ -88,5 +88,22 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\ItemsAttributes\ItemAttributesRepository::class
         );
 
+
+        /*
+         * Page repository
+         */
+        $this->app->singleton(
+            \App\Repositories\Page\PageRepositoryInterface::class,
+            \App\Repositories\Page\PageRepository::class
+        );
+
+        /*
+         * Attribute product repository
+         */
+        $this->app->singleton(
+            \App\Repositories\ItemAttributeProduct\ItemAttributeProductRepositoryInterface::class,
+            \App\Repositories\ItemAttributeProduct\ItemAttributeProductRepository::class
+        );
+
     }
 }

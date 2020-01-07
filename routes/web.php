@@ -70,7 +70,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['auth', 'admin']],
         Route::get('item-attribute/{id}', 'ItemsAttributesController@list_add')->name('items_list_attributes');
         Route::resource('ItemsAttribute', 'ItemsAttributesController');
         Route::resource('category', 'CategoriesController');
-        //Route::resource('new', 'NewsController');
+        Route::resource('page', 'PageController');
         Route::resource('post', 'PostsController');
         Route::resource('category-product', 'CategoryProductController');
     });

@@ -24,7 +24,6 @@
                 <div class="row">
                     <div class="col-lg-12">
                         {!! Form::model($post, ['method'=>'PATCH', 'files'=> 'true' , 'action'=> ['PostsController@update', $post->id]]) !!}
-                        {{--{{ method_field('PUT') }}--}}
                         <div class="form-group">
                             <label>Title</label>
                             <input value="{{ $post->name ? : old('name') }}" class="form-control" required name="name" placeholder="Category name">

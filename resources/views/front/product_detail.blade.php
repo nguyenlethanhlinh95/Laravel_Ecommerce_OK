@@ -71,7 +71,7 @@
                             <div class="available">
                                 <p>Available Options : {{ $product->stock }} In stock</p>
 
-                                {{--<ul>--}}
+                                <ul>
                                     {{--<li>Color:--}}
                                         {{--<select>--}}
                                             {{--<option>Silver</option>--}}
@@ -79,13 +79,13 @@
                                             {{--<option>Dark Black</option>--}}
                                             {{--<option>Red</option>--}}
                                         {{--</select></li>--}}
-                                    {{--<li>Size:<select>--}}
-                                            {{--<option>Large</option>--}}
-                                            {{--<option>Medium</option>--}}
-                                            {{--<option>small</option>--}}
-                                            {{--<option>Large</option>--}}
-                                            {{--<option>small</option>--}}
-                                        {{--</select></li>--}}
+                                    @if (!empty($items_attributes_name))
+                                    <li>Size:<select>
+                                            @foreach($items_attributes_name as $item)
+                                                <option>{{ $item->name }}</option>
+                                            @endforeach
+                                        </select></li>
+                                    @endif
                                     {{--<li>Quality:<select>--}}
                                             {{--<option>1</option>--}}
                                             {{--<option>2</option>--}}
@@ -93,7 +93,7 @@
                                             {{--<option>4</option>--}}
                                             {{--<option>5</option>--}}
                                         {{--</select></li>--}}
-                                {{--</ul>--}}
+                                </ul>
                             </div>
                             <div class="share-desc">
                                 <div class="share">

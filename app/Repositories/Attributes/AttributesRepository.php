@@ -8,6 +8,7 @@
 
 namespace App\Repositories\Attributes;
 use App\Attributes;
+use Mockery\Exception;
 
 /**
  * Class AttributesRepository
@@ -49,6 +50,39 @@ class AttributesRepository implements AttributesRepositoryInterface
         catch (Exception $ex)
         {
             return false;
+        }
+    }
+
+    public function getDetailAttribute($name)
+    {
+        try{
+            $sizes = Attributes::where('name', $name)
+                ->first();
+            if ($sizes != null){
+                return $sizes;
+            }
+            else
+                return null;
+        }catch (Exception $exception)
+        {
+            return null;
+        }
+    }
+
+    public function getAllItemsAtt($att)
+    {
+        // TODO: Implement getAllSize() method.
+        try{
+            $sizes = $this->getDetailAttribute('Size');
+            if ($sizes != null){
+                return $sizes->itemsAttribute;
+            }
+            else
+                return null;
+        }
+        catch (Exception $exception)
+        {
+            return null;
         }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\CategoryProduct\CategoryProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Recommends\RecommendsRepositoryInterface;
+use App\Repositories\ItemsAttributes\ItemAttributesRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -20,12 +21,14 @@ class HomeController extends Controller
     private $product_repository;
     private $product_category_repository;
     private $recommends_repository;
+    private $itemsAtt_repository;
 
-    public function __construct(ProductRepositoryInterface $pro, CategoryProductRepository $cat, RecommendsRepositoryInterface $re)
+    public function __construct(ProductRepositoryInterface $pro, CategoryProductRepository $cat, RecommendsRepositoryInterface $re, ItemAttributesRepositoryInterface $items)
     {
         $this->product_repository = $pro;
         $this->product_category_repository = $cat;
         $this->recommends_repository = $re;
+        $this->itemsAtt_repository = $items;
     }
 
     /**
@@ -52,7 +55,7 @@ class HomeController extends Controller
     {
         try{
             $product = $this->product_repository->getDetail($id);
-
+            $items_attributes_name = $this->itemsAtt_repository->getItemsAttByName('Size');
             if (isset($product))
             {
                 if (Auth::check()){
@@ -67,11 +70,10 @@ class HomeController extends Controller
                     if (!$isCheckRecommend){
                         $this->recommends_repository->addRecommend($user_id,$product->id);
                     }
-
                     $getRecommends = $this->recommends_repository->getProducts(3);
-                    return view('front.product_detail', compact('product','checkProductWishList','getRecommends'));
+                    return view('front.product_detail', compact('product','checkProductWishList','getRecommends','items_attributes_name'));
                 }else{
-                    return view('front.product_detail', compact('product'));
+                    return view('front.product_detail', compact('product','items_attributes_name'));
                 }
             }
             else

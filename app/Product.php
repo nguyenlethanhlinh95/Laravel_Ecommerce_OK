@@ -25,5 +25,10 @@ class Product extends Model
         return $this->belongsTo('App\CategoryProduct', 'id_category', 'id');
     }
 
+    public function item_attributes()
+    {
+        return $this->belongsToMany('App\ItemsAttribute','items_attribute_product','product_id','items_attribute_id');
+    }
+
 }
 

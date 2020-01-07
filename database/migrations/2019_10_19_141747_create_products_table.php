@@ -18,6 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('pro_name');
             $table->string('pro_code');
             $table->string('pro_price');
+            $table->date('sale_date_from')->nullable();
+            $table->date('sale_date_to')->nullable();
             $table->string('stock');
             $table->string('image')->nullable();
             $table->string('spl_price')->nullable()->default('0');

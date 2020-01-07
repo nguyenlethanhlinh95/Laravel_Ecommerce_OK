@@ -8,7 +8,7 @@
     @section('header')
         Create product
     @endsection
-    <div class="row">
+    <div class="row" id="product_create">
         {!! Form::open(['route'=> 'product.store', 'method' => 'post', 'files'=> 'true' ]) !!}
 
         <div class="col-lg-9">
@@ -31,29 +31,27 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Product code</label>
-                                    <input value="{{ old('pro_code') }}" class="form-control" name="pro_code" placeholder="Prodcut code">
+                                    <label>Content</label>
+                                    <textarea id="editor" type="text" value="{{ old('content') }}"  class="form-control" name="content" placeholder="Content">
+
+                                        </textarea>
                                 </div>
 
-                                <div class="form-group">
-                                    <label>Product price</label>
-                                    <input value="{{ old('pro_price') }}" class="form-control" name="pro_price" placeholder="Prodcut price">
-                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h4>
+                                            <span>Product data</span>
+                                        </h4>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label>Product discount price</label>
-                                    <input value="{{ old('spl_price') }}" class="form-control" name="spl_price" placeholder="Prodcut discount price">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Product Stock</label>
-                                    <input value="{{ old('stock') }}" class="form-control" name="stock" placeholder="Prodcut stock">
+                                    {{--tabs--}}
+                                    @include('layout.admin.partials.product.tabs', compact('sizes'))
                                 </div>
 
                                 <div class="form-group">
                                     <label>Category</label>
                                     <select value ="{{ old('id_category') }}" name="id_category" class="form-control">
-                                        <option value="0" >Chọn</option>
+                                        {{--<option value="0" >Chọn</option>--}}
                                         @foreach($categories as $key => $value)
                                             <option value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
@@ -61,15 +59,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Content</label>
-                                    <textarea id="editor" type="text" value="{{ old('content') }}"  class="form-control" name="content" placeholder="Content">
-
-                                    </textarea>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label>Description</label>
+                                    <label>Product short description</label>
                                     <textarea id="editor1" type="text" value="{{ old('description') }}" class="form-control" name="description" placeholder="Description">
                                     </textarea>
                                 </div>

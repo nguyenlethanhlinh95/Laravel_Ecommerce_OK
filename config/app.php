@@ -240,6 +240,4 @@ return [
      * returns: int
      */
         'page' => 5,
-
-
 ];

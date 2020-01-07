@@ -1,23 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-//namespace DAO;
 
 use App\Http\Requests\ProductRequest;
 use App\Product;
-use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Attributes\AttributesRepositoryInterface;
 use App\Repositories\CategoryProduct\CategoryProductRepositoryInterface;
-use App\Repositories\Product\ProductRepository;
+use App\Repositories\ItemAttributeProduct\ItemAttributeProductRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+
 use Mockery\Exception;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
-//include "../../DAO/ProductDao.php";
-
 class ProductsController extends Controller
 {
     /**
@@ -30,10 +25,14 @@ class ProductsController extends Controller
 
     private $product_repository;
     private $category_repository;
-    public function __construct(ProductRepositoryInterface $productRepo, CategoryProductRepositoryInterface $cateRepo)
+    private $attribute_repository;
+    private $item_product_att;
+    public function __construct(ItemAttributeProductRepositoryInterface $item_pro_att,AttributesRepositoryInterface $att, ProductRepositoryInterface $productRepo, CategoryProductRepositoryInterface $cateRepo)
     {
         $this->product_repository = $productRepo;
         $this->category_repository = $cateRepo;
+        $this->attribute_repository = $att;
+        $this->item_product_att = $item_pro_att;
     }
 
     public function index()
@@ -54,7 +53,8 @@ class ProductsController extends Controller
     {
         //
         $categories = $this->category_repository->getAll();
-        return view('admin.products.create', compact('categories'));
+        $sizes = $this->attribute_repository->getAllItemsAtt('Size');
+        return view('admin.products.create', compact('categories', 'sizes'));
     }
 
     /**
@@ -68,7 +68,6 @@ class ProductsController extends Controller
         try
         {
             $formInput = $request->except('image');
-
             $image = $request->image;
             if($image){
                 $datetime = date('mdYhis', time());
@@ -81,18 +80,27 @@ class ProductsController extends Controller
             }
             else
             {
-                //$image =
                 $formInput['image'] = "image_null.jpg";
             }
-
-            Product::create($formInput);
-
+            DB::beginTransaction();
+            $product = Product::create($formInput);
+            $pro_id = $product->id;
+            // create detail size property
+            if ($request->size != null)
+            {
+                $sizes = $request->size;
+                foreach ($sizes as $item) {
+                    $this->item_product_att->addProductAttribute($pro_id,$item);
+                }
+            }
+            DB::commit();
+//            // create product
             Session::flash('suc', 'You succesfully created a product.');
             return redirect()->back();
         }
         catch (Exception $ex)
         {
-
+            DB::rollBack();
         }
     }
 
@@ -121,13 +129,24 @@ class ProductsController extends Controller
         //
         try
         {
+            $categories = $this->category_repository->getAll();
             $pro = $this->product_repository->getDetail($id);
-            return view('admin.products.detail', ['pro'=>$pro]);
+            $sizes = $this->attribute_repository->getAllItemsAtt('Size');
+            $sizes_product = $this->item_product_att->getAllAtrributeInProduct($id);
+            return view('admin.products.detail', compact('pro','sizes', 'sizes_product', 'categories'));
         }
         catch (Exception $ex)
         {
             return redirect()->route('product.index');
         }
+//        $a = [1,2,3,4,5];
+//        //dd($a);
+//
+//        $b = array();
+//        array_push($b,1);
+//        array_push($b,3);
+//        foreach ($b as $c)
+//            echo $c . ',';
     }
 
     /**
@@ -142,18 +161,13 @@ class ProductsController extends Controller
         //
         try
         {
+            DB::beginTransaction();
             $formInput = $request->except('image');
 
-            $this->validate($request, [
-                'pro_name' => 'required',
-                'pro_code' => 'required',
-                'pro_price' => 'required',
-                'image'=>'image|mimes:png,jpg,jpeg|max:10000'
-            ]);
-
             $product = $this->product_repository->getDetail($id);
-            $image = $request->image;
-            if($image){
+            //dd($product);
+            if($request->hasFile('image')){
+                $image = $request->image;
                 $datetime = date('mdYhis', time());
                 $imageName=$image->getClientOriginalName();
 
@@ -169,18 +183,28 @@ class ProductsController extends Controller
                     unlink( 'images' . $product->image);
                 }
 
-
                 $formInput['image']=$Hinh;
             }
+//
+            if ($request->size != null)
+            {
+                $sizes = $request->size;
+                $sync_data = [];
+                for($i = 0; $i < count($sizes); $i++)
+                    $sync_data[$i] = $sizes[$i];
 
+                $this->item_product_att->updateProductAttribute($id,$sync_data);
+            }
+            //if ($sizes)
             $product->update($formInput);
 
+            DB::commit();
             Session::flash('inf', 'You succesfully updated a product.');
             return redirect()->back();
         }
         catch (Exception $ex)
         {
-
+            DB::rollBack();
         }
     }
 
