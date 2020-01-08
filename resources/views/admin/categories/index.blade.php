@@ -1,7 +1,7 @@
 @extends('layout.admin.master')
 
 @section('header')
-    Categories
+    Categories <span><a href="{{ route('category.create') }}">Add new</a></span>
 @endsection
 
 @section('content')
@@ -13,6 +13,7 @@
                 </div>
 
                 <div class="panel-body">
+                    @if (! $categories->isEmpty())
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
@@ -70,6 +71,9 @@
                         </div>
 
                     </div>
+                    @else
+                        <h4>Data not found</h4>
+                    @endif
                 </div>
             </div>
         </div>

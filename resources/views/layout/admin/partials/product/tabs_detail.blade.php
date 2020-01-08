@@ -43,13 +43,13 @@
                         <div class="form-group row hide" id="sales_price">
                             <label for="sale_price" class="col-sm-3 col-form-label">Sale price dates</label>
                             <div class="col-sm-9">
-                                <input type="date" class="form-control-plaintext" id="sale_price" placeholder="From… YYYY-MM-DD">
+                                <input value="{{ $pro->sale_date_from }}" type="date" class="form-control-plaintext" name="sale_date_from" id="sale_price" placeholder="From… YYYY-MM-DD">
                                 <a href="#" class="cancle">Cancel</a>
                             </div>
 
                             <label for="staticEmail" class="col-sm-3 col-form-label"></label>
                             <div class="col-sm-9 mgt-10" style="margin-top: 10px !important;">
-                                <input type="date" class="form-control-plaintext mgt-10" id="b" placeholder="To… YYYY-MM-DD">
+                                <input value="{{ $pro->sale_date_to }}" type="date" class="form-control-plaintext mgt-10" name="sale_date_to" id="b" placeholder="To… YYYY-MM-DD">
                             </div>
                         </div>
                     </div>

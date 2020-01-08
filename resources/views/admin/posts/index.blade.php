@@ -1,7 +1,7 @@
 @extends('layout.admin.master')
 
 @section('header')
-    Post
+    Posts <span><a href="{{ route('post.create') }}">Add new</a></span>
 @endsection
 
 @section('content')
@@ -13,6 +13,7 @@
                 </div>
 
                 <div class="panel-body">
+                    @if (! $posts->isEmpty())
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
@@ -29,42 +30,40 @@
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach($posts as $post)
-                                    <tr @if ($i %2 == 1) {{ 'class="odd gradeX"'  }} @else {{ 'class="even gradeC"' }} @endif>
-                                        <td>{{ $i }}</td>
-                                        <td>{{ $post->id }}</td>
-                                        <td>{{ $post->name }}</td>
-                                        <td class="center">{{ $post->slug }}</td>
-                                        <td>
-                                            <div class="flex-center">
-                                                <img @if($post->image == "posts/news_null.jpg") src="{{ 'images/posts/news_null.png' }}" @else src="{{ 'images/' . $post->image }}" @endif  alt="" style="width: 100px; height: 65px; object-fit:  contain">
-                                            </div>
-                                        </td>
-                                        <td class="center">{{ $post->description}}</td>
-                                        <td class="center">
-                                            @foreach($categoryName as $cate => $value)
-                                                @if($post->category_id == $value)
-                                                    {{ $cate}}
-                                                @endif
-                                            @endforeach
 
-                                        </td>
-                                        <td class="center">
-                                            <a href="{{ route('post.create') }}" title="Create">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                            </a> |
-                                            <a href="{{ route('post.edit', ['id'=>$post->id]) }}" title="Edit">
-                                                <i class="fa fa-pencil" aria-hidden="true">
+                                    @foreach($posts as $post)
+                                        <tr @if ($i %2 == 1) {{ 'class="odd gradeX"'  }} @else {{ 'class="even gradeC"' }} @endif>
+                                            <td>{{ $i }}</td>
+                                            <td>{{ $post->id }}</td>
+                                            <td>{{ $post->name }}</td>
+                                            <td class="center">{{ $post->slug }}</td>
+                                            <td>
+                                                <div class="flex-center">
+                                                    <img @if($post->image == "posts/news_null.jpg") src="{{ 'images/posts/news_null.png' }}" @else src="{{ 'images/' . $post->image }}" @endif  alt="" style="width: 100px; height: 65px; object-fit:  contain">
+                                                </div>
+                                            </td>
+                                            <td class="center">{{ $post->description}}</td>
+                                            <td class="center">
+                                                @foreach($categoryName as $cate => $value)
+                                                    @if($post->category_id == $value)
+                                                        {{ $cate}}
+                                                    @endif
+                                                @endforeach
 
-                                                </i>
-                                            </a> |
-                                            <a href="{{ route('post.show', ['id'=>$post->id]) }}" title="Delete">
-                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                            </a>
-                                        </td>
-                                        <?php $i ++; ?>
-                                    </tr>
-                                @endforeach
+                                            </td>
+                                            <td class="center">
+                                                <a href="{{ route('post.edit', ['id'=>$post->id]) }}" title="Edit">
+                                                    <i class="fa fa-pencil" aria-hidden="true">
+
+                                                    </i>
+                                                </a> |
+                                                <a href="{{ route('post.show', ['id'=>$post->id]) }}" title="Delete">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <?php $i ++; ?>
+                                        </tr>
+                                    @endforeach
 
                             </tbody>
                         </table>
@@ -72,8 +71,11 @@
                         <div class="pagination text-center" style="margin: 0 auto; display: block;">
 
                         </div>
-
                     </div>
+                    @else
+                        <h4>Data not <found class=""></found></h4>
+                    @endif
+
                 </div>
             </div>
         </div>

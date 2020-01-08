@@ -23,9 +23,9 @@
                                     <th width="300px">
                                         <span>Title</span>
                                     </th>
-                                    <th width="150px">
-                                        <span>Author</span>
-                                    </th>
+                                    {{--<th width="150px">--}}
+                                        {{--<span>Author</span>--}}
+                                    {{--</th>--}}
                                     <th width="150px">
                                         <span>Date</span>
                                     </th>
@@ -39,9 +39,9 @@
                                             <td class="text-center">
                                                 <input type="checkbox">
                                             </td>
-                                            <td>About</td>
-                                            <td>Thanh Linh</td>
-                                            <td>20/11/2019</td>
+                                            <td>{{ $page->title }}</td>
+                                            {{--<td>Thanh Linh</td>--}}
+                                            <td>{{ $page->created_at->format('m/d/Y') }}</td>
                                             <td>
                                                 <a href="{{ route('page.create') }}" title="Create">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>

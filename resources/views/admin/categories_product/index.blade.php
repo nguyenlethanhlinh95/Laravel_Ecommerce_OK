@@ -1,7 +1,7 @@
 @extends('layout.admin.master')
 
 @section('header')
-    Product categories
+    Product categories <span><a href="{{ route('category-product.create') }}">Add new</a></span>
 @endsection
 
 @section('content')
@@ -47,9 +47,6 @@
                                             {{--{{ $cat->parent_id }}--}}
                                         </td>
                                         <td class="center">
-                                            <a href="{{ route('category-product.create') }}" title="Create">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                            </a> |
                                             <a href="{{ route('category-product.edit', ['id'=>$cat->id]) }}" title="Edit">
                                                 <i class="fa fa-pencil" aria-hidden="true">
 

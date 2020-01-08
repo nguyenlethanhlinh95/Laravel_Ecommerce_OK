@@ -25,7 +25,18 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     public function getAll(){
-        return Product::paginate(5);
+        try{
+            $products = Product::paginate(5);
+            if ($products != null)
+                return $products;
+            else
+                return null;
+        }
+        catch (Exception $exception)
+        {
+            return null;
+        }
+
         //return Product::all();
     }
 
@@ -175,6 +186,39 @@ class ProductRepository implements ProductRepositoryInterface
         }
         catch (Exception $exception){
             return false;
+        }
+    }
+
+    public function countProducts()
+    {
+        // TODO: Implement countProducts() method.
+        try{
+            $count = Product::count();
+            return $count;
+        }
+        catch (Exception $exception)
+        {
+            return 0;
+        }
+    }
+
+    public function searchNameAndContent($str)
+    {
+        // TODO: Implement searchNameAndContent() method.
+        try{
+            $data = Product::where('pro_name', 'LIKE', "%$str%")
+                //->orWhere('content', 'LIKE', "%$str%")
+                ->get();
+            if ($data != null)
+            {
+                return $data;
+            }else{
+                return null;
+            }
+        }
+        catch (Exception $exception)
+        {
+            return null;
         }
     }
 }

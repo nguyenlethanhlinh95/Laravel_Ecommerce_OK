@@ -178,6 +178,10 @@ return [
         App\Providers\RouteServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+
+
+        // javascript route
+        //Tightenco\Ziggy\ZiggyServiceProvider::class
     ],
 
     /*

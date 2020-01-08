@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Post;
 use App\Repositories\Category\CategoryRepositoryInterface;
-use Illuminate\Http\Request;
+use App\Repositories\Post\PostRepositoryInterface;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 use Mockery\Exception;
@@ -22,11 +22,9 @@ class PostsController extends Controller
 
     private $categoresRepository;
 
-    public function __construct(CategoryRepositoryInterface $category)
+    public function __construct(CategoryRepositoryInterface $category, PostRepositoryInterface $p)
     {
-        $this->post = new PostDao();
-        //$this->cate = new CategoryDao();
-
+        $this->post = $p;
         $this->categoresRepository = $category;
     }
 
@@ -34,6 +32,7 @@ class PostsController extends Controller
     {
         //
         $posts = $this->post->getAllWithPagi();
+
         $categoryName = $this->categoresRepository->getAllSmall();
         return view('admin.posts.index', compact('posts', 'categoryName'));
     }
@@ -167,8 +166,6 @@ class PostsController extends Controller
             Session::flash('err', 'You not updated a category.');
             return redirect()->back();
         }
-
-
     }
 
     /**
@@ -181,46 +178,4 @@ class PostsController extends Controller
     {
         //
     }
-}
-
-
-class PostDao extends Post
-{
-    public function getAll()
-    {
-        try{
-            return Post::all();
-        }
-        catch (Exception $ex)
-        {
-            return null;
-        }
-
-    }
-
-    public function getAllWithPagi()
-    {
-        $page=\Config::get('app.page');
-        return Post::paginate($page);
-    }
-
-    public function getDetail($id)
-    {
-        return Post::find($id);
-    }
-
-    public function getCategoryName($idPost)
-    {
-        try{
-            $cate = Post::find($idPost)->category()->select('name')->first();
-            return $cate;
-        }
-        catch (Exception $ex)
-        {
-            return null;
-        }
-    }
-
-
-
 }

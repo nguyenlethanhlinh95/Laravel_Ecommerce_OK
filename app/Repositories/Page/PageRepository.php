@@ -50,4 +50,20 @@ class PageRepository implements PageRepositoryInterface
             return false;
         }
     }
+
+    public function getPage($page_name)
+    {
+        try{
+            $data = Page::where('title', $page_name)
+                ->first();
+            if (empty($data))
+                return null;
+            else
+                return $data;
+        }
+        catch (Exception $exception)
+        {
+            return null;
+        }
+    }
 }

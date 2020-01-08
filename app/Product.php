@@ -13,7 +13,7 @@ class Product extends Model
     //
     protected $table = 'products';
     protected $primaryKey = 'id';
-    protected $fillable = ['pro_name', 'pro_code','id_category', 'pro_price', 'spl_price', 'image', 'description', 'content', 'stock'];
+    protected $fillable = ['pro_name', 'pro_code','id_category', 'pro_price', 'sale_date_from', 'sale_date_to' ,'spl_price', 'image', 'description', 'content', 'stock'];
 
     public function categories()
     {

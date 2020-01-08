@@ -10,7 +10,8 @@
         "gloudemans/shoppingcart": "^2.6",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
-        "laravelcollective/html": "^5.5"
+        "laravelcollective/html": "^5.5",
+        "tightenco/ziggy": "^0.8.1"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

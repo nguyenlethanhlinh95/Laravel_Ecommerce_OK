@@ -26,23 +26,20 @@
                         <div class="col-lg-12">
                                 <div class="form-group">
                                     <label>Page title</label>
-                                    <input class="form-control" required name="name" placeholder="Page title">
+                                    <input value="{{ old('title') }}" class="form-control" required name="title" placeholder="Page title">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Slug</label>
-                                    <input class="form-control" name="slug" placeholder="Slug">
+                                    <input value="{{ old('slug') }}" class="form-control" name="slug" placeholder="Slug">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Content</label>
-                                    <textarea id="editor" class="form-control" name="content" placeholder="Content"></textarea>
+                                    <textarea id="editor" class="form-control" name="content" placeholder="Content">
+                                        {{ old('content') }}
+                                    </textarea>
                                 </div>
-
-                            {{--<div class="form-group">--}}
-                                {{--{{ Form::label('image', 'Image') }}--}}
-                                {{--{{ Form::file('image',array('class' => 'form-control', 'name'=>'image')) }}--}}
-                            {{--</div>--}}
 
                         </div>
                     </div>

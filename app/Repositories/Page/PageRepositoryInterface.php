@@ -8,6 +8,7 @@
 
 namespace App\Repositories\Page;
 
+use Mockery\Exception;
 
 interface PageRepositoryInterface
 {
@@ -16,4 +17,6 @@ interface PageRepositoryInterface
     public function getDetail($id);
 
     public function delete($id);
+
+    public function getPage($page_name);
 }

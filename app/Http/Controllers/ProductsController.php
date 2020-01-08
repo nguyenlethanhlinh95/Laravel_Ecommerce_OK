@@ -39,9 +39,9 @@ class ProductsController extends Controller
     {
         $products = $this->product_repository->getAll();
         $categories_product = $this->category_repository->getAll();
-
+        $count = $this->product_repository->countProducts();
         //echo '<pre>'; print_r($products); echo '</pre>';
-        return view('admin.products.index', compact('products', 'categories_product'));
+        return view('admin.products.index', compact('products', 'categories_product', 'count'));
     }
 
     /**
@@ -156,7 +156,7 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         //
         try
@@ -235,5 +235,14 @@ class ProductsController extends Controller
             Session::flash('err', 'You not Deleted a product.');
             return redirect()->back();
         }
+    }
+
+    public function testAjax(Request $request)
+    {
+        $str = $request->get('str');
+        $products_search = $this->product_repository->searchNameAndContent($str);
+
+        $products = $this->product_repository->getAll();
+        return response()->json(['data'=>$products_search, 'products'=>$products], 200);
     }
 }

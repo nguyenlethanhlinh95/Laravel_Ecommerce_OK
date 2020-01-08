@@ -28,9 +28,11 @@ class ProductRequest extends FormRequest
             'pro_name' => 'required',
             'pro_code' => 'required',
             'pro_price' => 'required',
-            'id_category'=> '',
+            'id_category'=> 'nullable',
             'image'=>'image|mimes:png,jpg,jpeg|max:10000',
-            'stock'=> ''
+            'sale_date_from'=> 'date|nullable',
+            'sale_date_to'=> 'date|after_or_equal:sale_date_from|nullable',
+            'stock'=> 'nullable'
         ];
     }
 }

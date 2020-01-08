@@ -36,7 +36,8 @@
 
                                 <div class="form-group">
                                     <label>Descriptions</label>
-                                    <input class="form-control" name="description" placeholder="Category descriptions">
+                                    <textarea id="editor" class="form-control" name="description" placeholder="Category descriptions">
+                                    </textarea>
                                 </div>
 
                                 <div class="form-group">
@@ -58,3 +59,10 @@
         </div>
     </div>
 @endsection
+
+@section('js')
+    <script>
+        var editor = CKEDITOR.replace( 'editor' );
+        var editor1 = CKEDITOR.replace( 'editor1' );
+    </script>
+@stop

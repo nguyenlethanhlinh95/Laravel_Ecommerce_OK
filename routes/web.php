@@ -17,6 +17,7 @@ Auth::routes();
  * */
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/shop.html', 'HomeController@index')->name('shop');
 Route::get('/contact.html', 'HomeController@contact')->name('contact');
 Route::get('/product-detail/{name}.{id}.html', 'HomeController@productDetail')->name('product_view_detail');
@@ -46,6 +47,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/removeWishList/{id}.html', 'HomeController@destroyWishlist')->name('removeWishlist');
 
     Route::get('/wishlist.html', 'HomeController@viewWishList')->name('view_wishList');
+    Route::post('testAjax', 'ProductsController@testAjax')->name('testAjax');
 //    Route::get('/profile', function() {
 //        return view('profile.index');
 //    });
@@ -64,6 +66,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['auth', 'admin']],
         {
             return view('admin.index');
         })->name('admin.index');
+        //Route::get('/print_product', '')
         Route::resource('product', 'ProductsController');
         Route::resource('attribute', 'AttributesController');
 

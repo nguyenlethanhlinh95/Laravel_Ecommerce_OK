@@ -25,11 +25,11 @@ class PageRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required',
+            'title' => 'required',
             'content' => 'required',
-            'slug' => '',
-            'user_id' => '',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'slug' => 'nullable',
+            'user_id' => 'nullable',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|nullable',
         ];
     }
 }

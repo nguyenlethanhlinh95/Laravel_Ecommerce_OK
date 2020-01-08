@@ -8,6 +8,7 @@
 
 namespace App\Repositories\Product;
 
+use Mockery\Exception;
 
 interface ProductRepositoryInterface
 {
@@ -41,4 +42,8 @@ interface ProductRepositoryInterface
     public function countWishlist($user_id);
 
     public function removeWishlist($user_id, $pro_id);
+
+    public function countProducts();
+
+    public function searchNameAndContent($str);
 }

@@ -9,7 +9,7 @@
     Edit Page
 @endsection
 <div class="row">
-    {!! Form::model($page, ['method'=>'POST', 'action'=> ['ProductsController@update', $page->id], 'files'=>true]) !!}
+    {!! Form::model($page, ['method'=>'PATCH', 'action'=> ['PageController@update', $page->id], 'files'=>true]) !!}
     <div class="col-lg-9">
 
         <div class="">

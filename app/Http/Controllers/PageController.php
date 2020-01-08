@@ -7,6 +7,7 @@ use App\Page;
 use App\Repositories\Page\PageRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Mockery\Exception;
@@ -60,15 +61,29 @@ class PageController extends Controller
     {
         //
         try{
+            DB::beginTransaction();
+
+
             $user_id = Auth::user()->id;
-            $formInput = $request->all();
+            $formInput = $request->except('image');
             $formInput["user_id"] = $user_id;
+
+            $image = $request->image;
+            if($image){
+                $datetime = date('mdYhis', time());
+                $imageName=$image->getClientOriginalName();
+                $Hinh = $datetime. "_" . $imageName;
+                $image->move('images/pages',$Hinh);
+                $formInput['image']=$Hinh;
+            }
             if($formInput["slug"] == "")
             {
-                $slug = Str::slug($formInput["name"], '-');
+                $slug = Str::slug($formInput["title"], '-');
                 $formInput["slug"] = $slug;
             }
             Page::create($formInput);
+
+            DB::commit();
 
             Session::flash('suc', 'You succesfully created a page.');
             return redirect()->back();
@@ -76,6 +91,7 @@ class PageController extends Controller
         catch (Exception $exception)
         {
             abort('404');
+            DB::rollBack();
         }
     }
 
@@ -88,6 +104,17 @@ class PageController extends Controller
     public function show($id)
     {
         //
+        try{
+            $page = $this->page_repository->getDetail($id);
+            if ($page != null)
+                return view('admin.page.show', compact('page'));
+            else
+                abort('404');
+        }
+        catch (Exception $exception)
+        {
+            abort('404');
+        }
     }
 
     /**
@@ -126,6 +153,42 @@ class PageController extends Controller
     public function update(Request $request, $id)
     {
         //
+        try
+        {
+            $page = $this->page_repository->getDetail($id);
+            $formInput = $request->all();
+            if($formInput["slug"] == "")
+            {
+                $slug = Str::slug($formInput["name"], '-');
+                $formInput["slug"] = $slug;
+            }
+
+            if($request->hasFile('image')){
+                $image = $request->image;
+                $datetime = date('mdYhis', time());
+
+                $imageName=$image->getClientOriginalName();
+
+                $Hinh = $datetime. "_" . $imageName;
+
+                $image->move('images/pages',$Hinh);
+                // xoa hinh cu
+                if ($page->image != "posts/news_null.png")
+                {
+                    unlink( 'images/pages' .$page->image);
+                }
+                $formInput['image']= 'images/pages' . $Hinh;
+            }
+
+            $page->fill($formInput)->save();
+
+            Session::flash('inf', 'You succesfully updated a Page.');
+            return redirect()->back();
+        }
+        catch (Exception $ex)
+        {
+            abort('404');
+        }
     }
 
     /**
@@ -137,5 +200,24 @@ class PageController extends Controller
     public function destroy($id)
     {
         //
+        try{
+            $status =  $this->page_repository->delete($id);
+            if ($status)
+            {
+                Session::flash('suc', 'You succesfully Deleted a page.');
+                return redirect()->route('category.index');
+            }
+            else
+            {
+                Session::flash('err', 'You not Deleted a page.');
+                return redirect()->back();
+            }
+        }
+        catch (Exception $exception)
+        {
+            abort('404');
+        }
+
+
     }
 }

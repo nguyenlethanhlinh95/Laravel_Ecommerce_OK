@@ -105,5 +105,12 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\ItemAttributeProduct\ItemAttributeProductRepository::class
         );
 
+        /* Post repository
+         */
+        $this->app->singleton(
+            \App\Repositories\Post\PostRepositoryInterface::class,
+            \App\Repositories\Post\PostRepository::class
+        );
+
     }
 }

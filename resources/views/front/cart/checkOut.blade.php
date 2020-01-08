@@ -39,7 +39,7 @@
                         <tr id="{{ $cartItem->rowId }}">
                             <td class="cart_product">
                                 <a href="{{ route('product_view_detail', ['name'=> $cartItem->name ,'id'=>$cartItem->id]) }}">
-                                    <img src="images/{{$cartItem->options->img}}" alt="" width="200px">
+                                    <img style="width: 100px; height: 70px; object-fit:  contain" src="images/{{$cartItem->options->img}}" alt="" width="200px">
                                 </a>
                             </td>
                             {!! Form::open(['url'=> route("updateItemCart") , 'method' => 'put']) !!}

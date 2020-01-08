@@ -46,17 +46,14 @@
 
 
                             <div class="form-group">
-                                    <label>Category</label>
-                                    <select name="category_id" class="form-control">
-                                        <option value="0" >Chọn</option>
-                                        @foreach($categories as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-
-                                    </select>
-
-
-                                </div>
+                                <label>Category</label>
+                                <select name="category_id" class="form-control">
+                                    <option value="0" >Chọn</option>
+                                    @foreach($categories as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             <div class="form-group">
                                 {{ Form::label('image', 'Image') }}
@@ -72,3 +69,10 @@
         </div>
     </div>
 @endsection
+
+@section('js')
+    <script>
+        var editor = CKEDITOR.replace( 'editor' );
+        var editor1 = CKEDITOR.replace( 'editor1' );
+    </script>
+@stop
