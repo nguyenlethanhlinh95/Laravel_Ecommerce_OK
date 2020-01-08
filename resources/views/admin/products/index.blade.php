@@ -1,12 +1,14 @@
 @extends('layout.admin.master')
 
 @section('header')
-    <div class="row content_header_product">
+    <div class="row content_header_product" id="content_header_product">
         <div class="col-lg-6">
             <div class="button-group">
                 <button class="btn btn-danger active">All @if($count>0) {{ '('. $count .')' }} @endif</button>
                 <button class="btn btn-info">Published</button>
                 <button class="btn btn-info">Not published</button>
+                <a id="print_link" href="#"></a>
+
             </div>
         </div>
         <div class="col-lg-6 text-right">
@@ -15,10 +17,6 @@
                     <input id="search_product" class="form-control" type="text" placeholder="Search">
                 </div>
                 <button class="btn btn-dark col-sm-2" id="btn_search">Search</button>
-            </div>
-
-            <div class="form-group">
-                <a href="{{ route('print_priview') }}" class="btnprn btn">Print Preview</a>
             </div>
         </div>
     </div>
@@ -102,6 +100,12 @@
 {{--Xu ly ajax--}}
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    <style type="text/css">
+        @media print {
+            p.pageBreak {page-break-after: always;}
+        }
+    </style>
 @endsection
 @section('js')
     <script>
@@ -174,6 +178,19 @@
                        alert('Data empty !!');
                    }
                 });
+
+                // print product
+                $('#print_link').off('click').on('click', function (e) {
+                    e.preventDefault();
+                    $('#table_product').printThis({
+                        debug: true,
+                        canvas: true,
+                        importCSS: true,
+                        importStyle: true,
+                        header:"<h1>Report products</h1>",
+                    })
+                });
+
             }
         }
         dom.init();

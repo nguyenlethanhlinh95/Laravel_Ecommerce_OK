@@ -12,6 +12,7 @@ use Mockery\Exception;
 
 interface ProductRepositoryInterface
 {
+    public function getAllProducts();
     public function getAll();
 
     public function getDetail($id);

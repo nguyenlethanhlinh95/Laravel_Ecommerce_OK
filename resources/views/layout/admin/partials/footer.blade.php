@@ -3,6 +3,7 @@
 
 <!-- Core Scripts - Include with every page -->
 <script src="assets/admin/js/jquery-1.10.2.js"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>--}}
 <script src="assets/admin/js/bootstrap.min.js"></script>
 <script src="assets/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
@@ -11,6 +12,9 @@
 <script src="assets/admin/js/plugins/morris/morris.js"></script>
 <script src="{{ asset('assets/admin/js/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('assets/admin/js/ckfinder/ckfinder.js') }}"></script>
+<script src="{{ asset('assets/admin/js/printThis.min.js') }}"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.min.js"></script>--}}
+
 
 
 <!-- SB Admin Scripts - Include with every page -->

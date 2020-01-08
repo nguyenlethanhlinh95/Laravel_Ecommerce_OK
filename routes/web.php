@@ -66,7 +66,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['auth', 'admin']],
         {
             return view('admin.index');
         })->name('admin.index');
-        //Route::get('/print_product', '')
+        Route::get('/print-product', 'PrintController@printProducts')->name('print.product');
         Route::resource('product', 'ProductsController');
         Route::resource('attribute', 'AttributesController');
 

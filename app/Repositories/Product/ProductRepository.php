@@ -24,19 +24,13 @@ class ProductRepository implements ProductRepositoryInterface
         $this->user_repository = new UserRepository();
     }
 
-    public function getAll(){
-        try{
-            $products = Product::paginate(5);
-            if ($products != null)
-                return $products;
-            else
-                return null;
-        }
-        catch (Exception $exception)
-        {
-            return null;
-        }
+    public function getAllProducts()
+    {
+        return Product::all();
+    }
 
+    public function getAll(){
+        return Product::paginate(5);
         //return Product::all();
     }
 

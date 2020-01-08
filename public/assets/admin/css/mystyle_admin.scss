@@ -173,3 +173,32 @@
     }
   }
 }
+
+
+#content_header_product{
+  #print_link{
+    //margin-top: 20px !important;
+    display: inline-block;
+    position: relative;
+    border: none;
+    margin-left: 10px;
+    &:hover{
+      border: none;
+      background-color:unset;
+    }
+    &:before{
+      content: "\f02f";
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: normal;
+      text-decoration: inherit;
+      /*--adjust as necessary--*/
+      color: #000;
+      font-size: 30px;
+      padding-right: 0.5em;
+      position: absolute;
+      top: -6px;
+      left: 0;
+    }
+  }
+}
